@@ -20,8 +20,40 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  rollback:
+  build:
     if: inputs.confirm == 'ROLLBACK'
+    runs-on: ubuntu-latest
+    outputs:
+      revision: ${{ steps.revision.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate revision
+        id: revision
+        env:
+          REQUESTED_REVISION: ${{ inputs.revision }}
+        run: |
+          [[ "$REQUESTED_REVISION" =~ ^[0-9a-fA-F]{40}$ ]]
+          git merge-base --is-ancestor "$REQUESTED_REVISION" origin/main
+          git checkout --detach "$REQUESTED_REVISION"
+          printf 'sha=%s\n' "$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - run: npm run verify
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rollback-dist
+          path: dist
+          if-no-files-found: error
+
+  rollback:
+    needs: build
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -30,17 +62,21 @@ jobs:
       DEPLOY_ROOT: ${{ vars.DEPLOY_ROOT }}
       DEPLOY_BACKUP_ROOT: ${{ vars.DEPLOY_BACKUP_ROOT }}
       HEALTHCHECK_URL: ${{ vars.HEALTHCHECK_URL }}
+      ROLLBACK_REVISION: ${{ needs.build.outputs.revision }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
-          ref: ${{ inputs.revision }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.12.0
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-      - run: npm run verify
+          name: rollback-dist
+          path: dist
+      - name: Validate deployment configuration
+        run: |
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "$DEPLOY_ROOT"
+          test -n "$DEPLOY_BACKUP_ROOT"
+          test -n "$HEALTHCHECK_URL"
+          test -n "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}"
+          test -n "${{ secrets.DEPLOY_KNOWN_HOSTS }}"
       - name: Configure SSH
         run: |
           install -d -m 700 ~/.ssh
@@ -51,8 +87,8 @@ jobs:
       - name: Backup and deploy selected revision
         run: |
           stamp="$(date -u +%Y%m%dT%H%M%SZ)"
-          backup="$DEPLOY_BACKUP_ROOT/${stamp}-${GITHUB_SHA:0:12}-pre-rollback.tgz"
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_BACKUP_ROOT' '$DEPLOY_ROOT'; tar -C '$DEPLOY_ROOT' -czf '$backup' ."
+          backup="$DEPLOY_BACKUP_ROOT/${stamp}-${ROLLBACK_REVISION:0:12}-pre-rollback.tgz"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_BACKUP_ROOT' '$DEPLOY_ROOT'; if [ -n \"\$(find '$DEPLOY_ROOT' -mindepth 1 -maxdepth 1 -print -quit)\" ]; then tar -C '$DEPLOY_ROOT' -czf '$backup' .; fi"
           rsync -az --delete --delay-updates dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_ROOT/"
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" "printf '%s\n' '$GITHUB_SHA' > '$DEPLOY_ROOT/.deploy-revision'"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "printf '%s\n' '$ROLLBACK_REVISION' > '$DEPLOY_ROOT/.deploy-revision'"
           curl --fail --silent --show-error --retry 5 --retry-delay 3 "$HEALTHCHECK_URL"

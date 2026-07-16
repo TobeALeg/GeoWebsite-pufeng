@@ -34,6 +34,6 @@ GitHub `production` Environment 需要配置：
 
 Secrets：`DEPLOY_SSH_PRIVATE_KEY`、`DEPLOY_KNOWN_HOSTS`。
 
-Variables：`SITE_URL`、`DEPLOY_HOST`、`DEPLOY_USER`、`DEPLOY_ROOT`、`DEPLOY_BACKUP_ROOT`、`HEALTHCHECK_URL`。
+Variables：`DEPLOY_HOST`、`DEPLOY_USER`、`DEPLOY_ROOT`、`DEPLOY_BACKUP_ROOT`、`HEALTHCHECK_URL`。
 
 当前建议值见 `docs/architecture.md`。首次启用自动部署前，必须只读核对服务器目录、SSH 指纹和 Nginx root。

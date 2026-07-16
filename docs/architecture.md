@@ -24,4 +24,4 @@ src/data/site-content.json
 branch → Pull Request CI → main → production Environment → backup → rsync → health check
 ```
 
-生产参数建议：`SITE_URL=https://pufengwool.com`、`DEPLOY_ROOT=/var/www/pufengwool`、`DEPLOY_BACKUP_ROOT=/var/backups/pufengwool`。主机和用户由 GitHub Environment Variables 配置，SSH 私钥和固定主机指纹由 Secrets 配置。
+生产域名固定为 `https://pufengwool.com`。部署参数建议：`DEPLOY_ROOT=/var/www/pufengwool`、`DEPLOY_BACKUP_ROOT=/var/backups/pufengwool`。主机和用户由 GitHub Environment Variables 配置，SSH 私钥和固定主机指纹由 Secrets 配置。
