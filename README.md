@@ -19,6 +19,31 @@ npm run build
 npm run verify
 ```
 
+## 推荐协作流程
+
+官网修改统一走：**本地新分支修改 → Push → 提 Pull Request → CI 检查 → 合并到 `main` → GitHub Actions 自动部署**。
+
+```bash
+# 1. 从最新 main 创建功能分支
+git switch main
+git pull --ff-only
+git switch -c feature/<本次修改>
+
+# 2. 修改后完成本地验证
+npm run check
+npm run build
+npm run verify
+
+# 3. 提交并推送功能分支
+git add <本次修改的文件>
+git commit -m "说明本次修改"
+git push -u origin feature/<本次修改>
+```
+
+然后在 GitHub 创建合并到 `main` 的 Pull Request。CI 会重新执行检查和构建；CI 通过并完成代码审阅后再合并。合并到 `main` 会自动触发生产部署，部署前会备份当前线上版本。
+
+不要直接修改服务器文件，不要把密码、私钥或其他敏感信息提交进仓库。
+
 ## 内容与代码归属
 
 - `src/data/site-content.json` 是当前官网内容正本，页面文案、模块顺序和结构修改从这里开始。
