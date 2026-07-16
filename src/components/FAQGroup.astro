@@ -1,0 +1,39 @@
+---
+/**
+ * FAQGroup — 通用 FAQ 折叠组件。
+ * 首页 FAQPreview 是 teaser 版（两列卡片平铺），本组件是独立 FAQ 页的主场版（手风琴折叠）。
+ * 使用原生 <details> 保证源码可见（GEO 红线）。
+ */
+interface Props {
+  groups: {
+    label: string;
+    faqs: { question: string; answer: string }[];
+  }[];
+}
+
+const { groups } = Astro.props;
+---
+
+<section class="bg-white">
+  <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 md:py-24">
+    {
+      groups.map((group) => (
+        <div class="mb-16 last:mb-0">
+          <h2 class="mb-8 text-2xl font-heading font-bold tracking-tight text-default">{group.label}</h2>
+          <div class="space-y-4">
+            {group.faqs.map((fq) => (
+              <details class="group rounded-2xl border border-slate-200/60 bg-slate-50/50 transition hover:border-slate-300">
+                <summary class="cursor-pointer px-6 py-5 text-lg font-semibold text-default marker:text-primary [&::-webkit-details-marker]:text-primary">
+                  {fq.question}
+                </summary>
+                <div class="px-6 pb-5 text-pretty leading-7 text-muted">
+                  {fq.answer}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

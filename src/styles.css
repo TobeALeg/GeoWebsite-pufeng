@@ -1,0 +1,256 @@
+@import "tailwindcss" source(none);
+
+@source "./**/*.{astro,js,ts}";
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("./assets/fonts/inter-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("./assets/fonts/inter-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("./assets/fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+}
+
+@theme {
+  --color-primary: var(--aw-color-primary);
+  --color-secondary: var(--aw-color-secondary);
+  --color-accent: var(--aw-color-accent);
+  --color-default: var(--aw-color-text-default);
+  --color-muted: var(--aw-color-text-muted);
+  --color-page: var(--aw-color-bg-page);
+  --color-surface: var(--aw-color-bg-surface);
+  --color-border: var(--aw-color-border);
+
+  --font-sans:
+    "Inter", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC",
+    ui-sans-serif, system-ui, sans-serif;
+  --font-serif:
+    "Instrument Serif", "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC",
+    ui-serif, Georgia, serif;
+  --font-heading:
+    "Inter", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", ui-sans-serif, system-ui,
+    sans-serif;
+
+  --animate-fade: fadeInUp 900ms both;
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@utility bg-page {
+  background-color: var(--aw-color-bg-page);
+}
+
+@utility text-default {
+  color: var(--aw-color-text-default);
+}
+
+@utility text-muted {
+  color: var(--aw-color-text-muted);
+}
+
+@utility border-soft {
+  border-color: var(--aw-color-border);
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center rounded-full border border-gray-300 bg-transparent px-6 py-3 text-sm font-semibold leading-snug text-default transition duration-200 ease-in hover:border-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2;
+}
+
+@utility btn-primary {
+  @apply btn border-primary bg-primary text-white hover:border-secondary hover:bg-secondary hover:text-white;
+}
+
+@utility btn-secondary {
+  @apply btn bg-white/80;
+}
+
+@utility btn-link {
+  @apply inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-secondary;
+}
+
+:root {
+  color-scheme: light;
+  --aw-font-sans: "Inter";
+  --aw-font-serif: "Instrument Serif";
+  --aw-font-heading: "Inter";
+
+  --aw-color-primary: rgb(1 97 239);
+  --aw-color-secondary: rgb(1 84 207);
+  --aw-color-accent: rgb(109 40 217);
+  --aw-color-text-heading: rgb(0 0 0);
+  --aw-color-text-default: rgb(16 16 16);
+  --aw-color-text-muted: rgb(16 16 16 / 66%);
+  --aw-color-bg-page: rgb(255 255 255);
+  --aw-color-bg-surface: rgb(248 250 252);
+  --aw-color-border: rgb(226 232 240);
+}
+
+@layer base {
+  html {
+    background-color: var(--aw-color-bg-page);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--aw-color-bg-page);
+    color: var(--aw-color-text-default);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgb(219 234 254);
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+#header.scroll,
+#header[data-solid-header] {
+  background: rgb(255 255 255 / 88%);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 6%), 0 0.375rem 1.5rem 0 rgb(140 152 164 / 10%);
+  backdrop-filter: blur(20px);
+}
+
+#header:not(.scroll):not([data-solid-header]) {
+  background: rgb(255 255 255 / 82%);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 6%);
+  backdrop-filter: blur(16px);
+}
+
+#header:not(.scroll) nav a {
+  color: var(--aw-color-text-muted);
+}
+
+#header:not(.scroll) nav a:hover {
+  background: rgb(15 23 42 / 6%);
+  color: var(--aw-color-primary);
+}
+
+#header:not(.scroll) nav a[aria-current="page"] {
+  background: color-mix(in srgb, var(--aw-color-primary) 11%, transparent);
+  color: var(--aw-color-primary);
+}
+
+#header:not(.scroll) .btn-primary {
+  border-color: var(--aw-color-primary);
+  background: var(--aw-color-primary);
+  color: #fff;
+}
+
+#header:not(.scroll) .btn-primary:hover {
+  border-color: var(--aw-color-secondary);
+  background: var(--aw-color-secondary);
+  color: #fff;
+}
+
+.aw-fade {
+  animation: fadeInUp 900ms both;
+}
+
+/* 首页初始态也使用实底,避免浅色首屏导致导航不可读。 */
+#header:not(.scroll) label[for="nav-toggle"] {
+  color: var(--aw-color-text-default);
+}
+
+/* 移动端菜单展开时,头部转实底、文字转深色(避免白底白字) */
+#header:has(#nav-toggle:checked) {
+  background: rgb(255 255 255 / 96%);
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 6%),
+    0 0.375rem 1.5rem 0 rgb(140 152 164 / 10%);
+  backdrop-filter: blur(20px);
+}
+
+#header:has(#nav-toggle:checked) a,
+#header:has(#nav-toggle:checked) label[for="nav-toggle"] {
+  color: var(--aw-color-text-default);
+}
+
+/* 展开时 CTA 主按钮恢复主色样式 */
+#header:has(#nav-toggle:checked) .btn-primary {
+  border-color: var(--aw-color-primary);
+  background: var(--aw-color-primary);
+  color: #fff;
+}
+
+/* 滚动揭示:默认下移并透明,进入视口加 .is-visible 后归位。
+   无 JS 时(或 reduce-motion)直接可见,保证可访问与降级。 */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .aw-fade {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* 区块标题统一节奏 */
+.section-eyebrow {
+  @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary;
+}
+
+.section-title {
+  @apply font-heading text-3xl font-bold leading-tight tracking-tight text-default sm:text-4xl;
+}
+
+.section-lead {
+  @apply mt-4 max-w-2xl text-base leading-7 text-muted sm:text-lg;
+}
+
+/* Hero 轮播圆点指示器:激活态变宽并染主色。 */
+.hero-dot {
+  @apply h-2.5 w-2.5 rounded-full bg-white/60 transition-all duration-300;
+}
+
+.hero-dot.is-active {
+  @apply w-8 bg-primary;
+}

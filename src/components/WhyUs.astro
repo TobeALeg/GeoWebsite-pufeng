@@ -1,0 +1,42 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  heading: string;
+  cards: { lead: string; detail: string }[];
+}
+
+const { heading, cards } = Astro.props;
+
+const iconMap: Record<string, string> = {
+  "性价比高": "tabler:coins",
+  "用料按代工标准": "tabler:shirt",
+  "公司正规、可出质检报告": "tabler:certificate",
+  "约100件即可起订": "tabler:package",
+  "一体化产线、产能充足": "tabler:building-factory-2",
+};
+---
+
+<section class="bg-slate-100">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
+    <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="section-eyebrow justify-center">Why Us</p>
+      <h2 class="section-title mt-4">
+        {heading}
+      </h2>
+    </div>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {cards.map((c, i) => (
+        <div class="flex h-full flex-col rounded-xl border border-slate-200/60 bg-white p-7 shadow-sm shadow-slate-900/[0.04] transition duration-300 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-900/5" data-reveal style={`--reveal-delay:${(i % 3) * 90}ms`}>
+          <Icon
+            name={iconMap[c.lead] ?? "tabler:star"}
+            class="mb-5 h-12 w-12 text-primary"
+          />
+          <h3 class="text-xl font-bold tracking-tight text-default">{c.lead}</h3>
+          <p class="mt-3 text-pretty leading-7 text-muted">{c.detail}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

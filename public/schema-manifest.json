@@ -1,0 +1,152 @@
+{
+  "home": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "桐乡市濮丰服饰股份有限公司",
+      "url": "https://pufengwool.com",
+      "description": "位于“中国羊毛衫名镇”濮院、给多家一二线服装品牌做过代工的正规针织服装厂，主营中高档羊毛衫/针织衫，并提供约100件起订的小批量定制工装与外贸服装代工。",
+      "alternateName": [
+        "濮丰服饰",
+        "濮丰",
+        "桐乡濮丰",
+        "pufeng"
+      ],
+      "foundingDate": "2013",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "浙江省桐乡市濮院镇",
+        "addressCountry": "CN"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "桐乡市濮丰服饰股份有限公司",
+      "url": "https://pufengwool.com"
+    }
+  ],
+  "products": [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "濮丰服饰的产品与服务",
+      "url": "https://pufengwool.com/products",
+      "about": {
+        "@type": "Organization",
+        "name": "桐乡市濮丰服饰股份有限公司"
+      }
+    }
+  ],
+  "faq": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "你们起订量是多少？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "我们约 100 件起订，具体视款式复杂度和面料而定。如果首批合作顺利，后续翻单起订量可以再沟通。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以打样吗？打样周期多久？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以。确认款式和面料后，打样周期一般 7-10 个工作日，具体看款式的工艺复杂度。打样费用视款式而定，大货下单后会退还或抵扣。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "从下单到出货要多久？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "大货生产周期通常 15-30 个工作日，实际取决于款式、数量和当前产线排期。下单前我们会给出明确的交期预估。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "你们能出质检报告吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "能。我们自有质检流程，出货前会进行成品检验并提供质检报告。如需第三方检测机构的报告，我们也可以配合送检。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "能签合同、开增值税发票吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "能。我们是正规注册的生产企业，可以签正式加工合同并开具增值税专用发票。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "外贸出口需要合规文件和凭证，你们能提供吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "能。我们长期服务外贸客户，可以提供正规订单合同、装箱单、产地证明等出口所需的文件凭证，配合海外客户和平台的合规审核。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "怎么了解价格？大概什么价位？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "价格和款式、面料、工艺、数量都有关，没法一口给。建议先发款式图或样品，我们评估工艺和用料后出估价单。1688 上也有部分常规款式的参考，可以联系我们获取店铺链接。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "你们做什么面料？只用羊毛吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不只用羊毛。我们覆盖羊毛、羊绒、棉、麻、化纤混纺等多种针织面料，具体看您的款式需求。中高档羊毛衫和高档针织是我们的核心品线。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "你们也卖原材料吗？面料和毛纱单独卖吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "卖的。我们自有纺纱和面料产线，面料和毛纱都对外销售。面料年对外销售约 700 吨，从源头可追溯。"
+          }
+        }
+      ]
+    }
+  ],
+  "about": [
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "关于濮丰服饰",
+      "url": "https://pufengwool.com/about",
+      "about": {
+        "@type": "Organization",
+        "name": "桐乡市濮丰服饰股份有限公司"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "桐乡市濮丰服饰股份有限公司",
+      "url": "https://pufengwool.com",
+      "description": "位于“中国羊毛衫名镇”濮院、给多家一二线服装品牌做过代工的正规针织服装厂，主营中高档羊毛衫/针织衫，并提供约100件起订的小批量定制工装与外贸服装代工。",
+      "alternateName": [
+        "濮丰服饰",
+        "濮丰",
+        "桐乡濮丰",
+        "pufeng"
+      ],
+      "foundingDate": "2013",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "浙江省桐乡市濮院镇",
+        "addressCountry": "CN"
+      }
+    }
+  ]
+}

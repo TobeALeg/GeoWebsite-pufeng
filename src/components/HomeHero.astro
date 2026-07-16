@@ -1,0 +1,321 @@
+---
+interface Media {
+  slot: string;
+  usage: string;
+  status: "resolved" | "missing";
+  src?: string;
+  alt?: string;
+  placeholder?: boolean;
+  caption?: string;
+}
+/** 单张轮播幻灯;不传 slides 时由顶层 props 兜出一张。所有 slide 都渲进 HTML(GEO 红线)。 */
+interface Slide {
+  image?: string;
+  imageAlt?: string;
+  kicker?: string;
+  headline: string;
+  oneLiner?: string;
+  highlights?: string[];
+  cta?: { label: string; url: string };
+}
+interface Props {
+  companyName: string;
+  visual?: "default" | "wanwang";
+  badge?: string;
+  headline: string;
+  oneLiner: string;
+  highlights?: string[];
+  cta?: { label: string; url: string };
+  secondaryCta?: { label: string; url: string };
+  backgroundImage?: string;
+  backgroundAlt?: string;
+  kicker?: string;
+  /** 轮播幻灯(wanwang 变体);≥2 张才出箭头/圆点并自动播放,1 张退化为静态。 */
+  slides?: Slide[];
+  /** 背景视频(静音循环自动播放);提供时优先于图片。 */
+  video?: { src: string; poster?: string };
+  media?: Media[];
+}
+const {
+  companyName,
+  visual = "default",
+  badge = "中国羊毛衫名镇 · 濮院",
+  headline,
+  oneLiner,
+  highlights = [],
+  cta,
+  secondaryCta = { label: "查看产品与服务", url: "/products" },
+  backgroundImage,
+  backgroundAlt = "",
+  kicker,
+  slides = [],
+  video,
+  media = [],
+} = Astro.props;
+const hero = media.find((m) => m.usage === "hero" && m.status === "resolved");
+const imageSrc = backgroundImage ?? hero?.src;
+const commaIndex = headline.indexOf("，");
+const headlineParts =
+  commaIndex >= 0
+    ? [headline.slice(0, commaIndex + 1), headline.slice(commaIndex + 1)]
+    : [headline];
+const heroHighlights = highlights.length
+  ? highlights
+  : oneLiner.split(/[；;、]/).filter(Boolean);
+
+// 轮播数据:有 slides 用 slides,否则用顶层 props 兜一张。1 张时退化为静态。
+const heroSlides: Slide[] =
+  slides.length > 0
+    ? slides
+    : [
+        {
+          image: imageSrc,
+          imageAlt: backgroundAlt,
+          kicker: kicker ?? badge,
+          headline,
+          oneLiner,
+          highlights: heroHighlights,
+          cta,
+        },
+      ];
+const isCarousel = heroSlides.length > 1;
+---
+
+{
+  visual === "wanwang" ? (
+    <section
+      data-hero-carousel
+      class="relative min-h-[34rem] overflow-hidden bg-slate-900 md:min-h-[39rem]"
+      aria-label={`${companyName} 首页首屏`}
+      aria-roledescription={isCarousel ? "轮播横幅" : undefined}
+    >
+      {heroSlides.map((slide, i) => (
+        <div
+          class:list={[
+            "hero-slide absolute inset-0 transition-opacity duration-700 ease-out",
+            i === 0 ? "opacity-100" : "opacity-0 pointer-events-none",
+          ]}
+          data-hero-slide
+          aria-hidden={i === 0 ? undefined : "true"}
+          aria-roledescription={isCarousel ? "幻灯片" : undefined}
+          aria-label={isCarousel ? `第 ${i + 1} 张 / 共 ${heroSlides.length} 张` : undefined}
+        >
+          {slide.image ? (
+            <img
+              src={slide.image}
+              alt={slide.imageAlt ?? ""}
+              width="1920"
+              height="1080"
+              loading={i === 0 ? "eager" : "lazy"}
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <div class="absolute inset-0 bg-[linear-gradient(135deg,#fff7ed_0%,#fed7aa_45%,#0f172a_100%)]" />
+          )}
+          <div class="absolute inset-0 bg-black/45" />
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.28)_70%)]" />
+
+          <div class="relative z-10 mx-auto flex h-full w-full max-w-5xl flex-col items-center justify-center px-4 py-20 text-center text-white sm:px-6">
+            {slide.kicker && (
+              <p class="text-sm font-semibold tracking-[0.22em] text-white/86 md:text-base">
+                {slide.kicker}
+              </p>
+            )}
+            <h1 class="mt-5 text-balance font-heading text-4xl font-black leading-tight tracking-normal text-white drop-shadow-md sm:text-5xl md:text-7xl">
+              {slide.headline}
+            </h1>
+            {slide.oneLiner && (
+              <p class="mx-auto mt-5 max-w-2xl text-pretty text-base font-medium leading-8 text-white/92 md:text-xl">
+                {slide.oneLiner}
+              </p>
+            )}
+            {slide.highlights && slide.highlights.length > 0 && (
+              <p class="mx-auto mt-3 max-w-2xl text-sm font-semibold text-white/82">
+                {slide.highlights.slice(0, 3).join(" · ")}
+              </p>
+            )}
+            <div class="mt-9 flex justify-center">
+              <a class="btn-primary rounded-lg px-9 py-4 text-base" href={slide.cta?.url ?? "#contact"}>
+                {slide.cta?.label ?? "联系我们"}
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {isCarousel && (
+        <>
+          <button
+            type="button"
+            data-hero-prev
+            class="absolute left-5 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/45 bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/30 md:flex"
+            aria-label="上一张"
+          >
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            data-hero-next
+            class="absolute right-5 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/45 bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/30 md:flex"
+            aria-label="下一张"
+          >
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <div class="absolute bottom-7 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/20 px-4 py-2 backdrop-blur-sm">
+            {heroSlides.map((_, i) => (
+              <button
+                type="button"
+                data-hero-dot
+                class:list={["hero-dot", i === 0 && "is-active"]}
+                aria-label={`切换到第 ${i + 1} 张`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+  ) : (
+    <section
+      class="relative -mt-[64px] flex min-h-screen overflow-hidden bg-slate-950 pt-[64px] md:-mt-[76px] md:pt-[76px]"
+      aria-label={`${companyName} 首页首屏`}
+    >
+  {
+    video ? (
+      <video
+        class="absolute inset-0 h-full w-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster={video.poster}
+        aria-hidden="true"
+      >
+        <source src={video.src} type="video/mp4" />
+      </video>
+    ) : hero ? (
+      <img
+        src={hero.src}
+        alt={hero.alt ?? ""}
+        width="1800"
+        height="1100"
+        loading="eager"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+    ) : (
+      <div class="absolute inset-0 bg-[linear-gradient(135deg,#0f172a_0%,#1e293b_40%,#1a1f2e_70%,#0f172a_100%)]" />
+    )
+  }
+  <div class="absolute inset-0 bg-[linear-gradient(105deg,rgba(8,13,23,0.94)_0%,rgba(8,13,23,0.66)_38%,rgba(8,13,23,0.28)_70%,rgba(8,13,23,0.08)_100%)]"></div>
+  <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(8,13,23,0.55)_0%,rgba(8,13,23,0.04)_46%,rgba(8,13,23,0.40)_100%)]"></div>
+
+  <div class="relative z-10 mx-auto flex w-full max-w-7xl items-center px-4 py-20 sm:px-6 md:py-28">
+    <div class="max-w-3xl aw-fade">
+      <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] text-white/90 backdrop-blur-sm">
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        {badge}
+      </p>
+      <h1 class="text-balance font-heading text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-7xl">
+        {
+          headlineParts.map((part, index) => (
+            <>
+              {index > 0 && <br />}
+              {part}
+            </>
+          ))
+        }
+      </h1>
+      <p class="mt-6 max-w-2xl text-pretty text-base leading-7 text-white/82 sm:text-lg">
+        {oneLiner}
+      </p>
+      <ul class="mt-7 flex max-w-3xl flex-wrap gap-x-5 gap-y-3 text-sm font-semibold text-white/82 md:text-base">
+        {
+          heroHighlights.slice(0, 4).map((item) => (
+            <li class="flex items-center gap-2">
+              <svg class="h-4 w-4 flex-none text-emerald-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.3 3.29 6.8-6.79a1 1 0 0 1 1.4 0Z" clip-rule="evenodd" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-10 flex max-w-md flex-col gap-4 sm:flex-row">
+        <a
+          class="btn-primary w-full border-white bg-white text-slate-950 hover:border-white/85 hover:bg-white/85 hover:text-slate-950 sm:w-auto"
+          href={cta?.url ?? "#contact"}>{cta?.label ?? "联系我们"}</a
+        >
+        <a
+          class="btn-secondary w-full border-white/45 bg-white/10 text-white hover:border-white hover:bg-white hover:text-slate-950 sm:w-auto"
+          href={secondaryCta.url}>{secondaryCta.label}</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <a
+    href="#stat"
+    class="absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 items-center justify-center text-white/55 transition hover:text-white md:flex"
+    aria-label="向下滚动"
+  >
+    <svg class="h-7 w-7 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+    </svg>
+  </a>
+    </section>
+  )
+}
+
+<script>
+  // Hero 轮播:≥2 张才启动。所有 slide 已在 HTML 源码里(GEO 安全),JS 只切换显隐。
+  const root = document.querySelector("[data-hero-carousel]");
+  const slides = root ? [...root.querySelectorAll("[data-hero-slide]")] : [];
+  if (root && slides.length > 1) {
+    const dots = [...root.querySelectorAll("[data-hero-dot]")];
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let idx = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    const show = (n: number) => {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        const active = i === idx;
+        s.classList.toggle("opacity-100", active);
+        s.classList.toggle("opacity-0", !active);
+        s.classList.toggle("pointer-events-none", !active);
+        s.setAttribute("aria-hidden", active ? "false" : "true");
+      });
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+    };
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = undefined;
+    };
+    const start = () => {
+      stop();
+      if (!reduce) timer = setInterval(() => show(idx + 1), 5500);
+    };
+
+    root.querySelector("[data-hero-next]")?.addEventListener("click", () => {
+      show(idx + 1);
+      start();
+    });
+    root.querySelector("[data-hero-prev]")?.addEventListener("click", () => {
+      show(idx - 1);
+      start();
+    });
+    dots.forEach((d, i) =>
+      d.addEventListener("click", () => {
+        show(i);
+        start();
+      }),
+    );
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+    start();
+  }
+</script>

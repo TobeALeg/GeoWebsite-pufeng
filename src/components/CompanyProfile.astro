@@ -1,0 +1,197 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface ProfileItem {
+  title: string;
+  body: string;
+}
+
+interface Milestone {
+  year: string;
+  title: string;
+  body: string;
+}
+
+interface StoryContent {
+  eyebrow?: string;
+  heading: string;
+  paragraphs?: string[];
+  milestones?: Milestone[];
+}
+
+interface HonorItem {
+  title: string;
+  note?: string;
+  image: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
+
+interface HonorWall {
+  eyebrow?: string;
+  heading: string;
+  lead?: string;
+  items: HonorItem[];
+}
+
+interface Props {
+  companyName: string;
+  fullName: string;
+  region?: string;
+  foundedYear?: number;
+  intro: string[];
+  story?: StoryContent;
+  honors?: HonorWall;
+  factory?: { heading: string; items: ProfileItem[] };
+  credentials?: { heading: string; items: ProfileItem[] };
+  audiences?: { heading: string; items: ProfileItem[] };
+}
+
+const {
+  fullName,
+  region,
+  foundedYear,
+  intro,
+  story,
+  honors,
+  factory,
+  credentials,
+  audiences,
+} = Astro.props;
+
+const groups = [factory, credentials, audiences].filter(
+  (group): group is { heading: string; items: ProfileItem[] } =>
+    Boolean(group?.items?.length),
+);
+const groupIcon: Record<string, string> = {
+  工厂与能力: "tabler:building-factory-2",
+  资质与背书: "tabler:certificate",
+  服务对象: "tabler:users-group",
+};
+const facts = [
+  fullName,
+  region,
+  foundedYear ? `${foundedYear}年股份公司成立` : "",
+].filter(Boolean);
+const storyParagraphs = story?.paragraphs?.length ? story.paragraphs : intro;
+const milestones = story?.milestones ?? [];
+const honorWall = honors?.items?.length ? honors : undefined;
+---
+
+<section class="bg-white">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+    <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-16">
+      <div class="max-w-3xl" data-reveal>
+        <p class="section-eyebrow">{story?.eyebrow ?? "公司简介"}</p>
+        <h1 class="section-title mt-4">{story?.heading ?? "我们是谁"}</h1>
+        <div class="mt-6 space-y-4 text-pretty leading-7 text-muted sm:text-lg">
+          {storyParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <div class="mt-7 flex flex-wrap gap-2 text-sm font-medium text-muted">
+          {
+            facts.map((fact) => (
+              <span class="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5">
+                {fact}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+
+      {
+        milestones.length > 0 && (
+          <ol class="border-l border-slate-200 pl-6" data-reveal style="--reveal-delay:120ms">
+            {milestones.map((item) => (
+              <li class="relative pb-8 last:pb-0">
+                <span class="absolute -left-[1.85rem] top-1 h-3 w-3 rounded-full bg-primary ring-4 ring-primary/12" />
+                <p class="text-sm font-bold text-primary">{item.year}</p>
+                <h2 class="mt-2 text-xl font-bold tracking-tight text-default">{item.title}</h2>
+                <p class="mt-2 text-pretty text-sm leading-7 text-muted">{item.body}</p>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+{
+  honorWall && (
+    <section class="bg-slate-950 text-white">
+      <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+        <div class="max-w-3xl" data-reveal>
+          <p class="section-eyebrow text-primary/90" style="color:#7cb0ff">
+            {honorWall.eyebrow ?? "HONORS"}
+          </p>
+          <h2 class="mt-4 font-heading text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+            {honorWall.heading}
+          </h2>
+          {honorWall.lead && (
+            <p class="mt-4 max-w-2xl text-pretty leading-7 text-white/70 sm:text-lg">
+              {honorWall.lead}
+            </p>
+          )}
+        </div>
+
+        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {honorWall.items.map((item, i) => (
+            <article data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <a
+                href={item.image}
+                target="_blank"
+                rel="noreferrer"
+                class="block overflow-hidden rounded-lg bg-white p-2 ring-1 ring-white/15 transition duration-300 hover:-translate-y-1 hover:ring-primary/55"
+                aria-label={`查看${item.title}`}
+              >
+                <img
+                  src={item.image}
+                  alt={item.alt}
+                  width={item.width ?? 1000}
+                  height={item.height ?? 1400}
+                  loading="lazy"
+                  class="aspect-[4/5] h-full w-full rounded-md bg-white object-contain"
+                />
+              </a>
+              <h3 class="mt-4 text-base font-bold tracking-tight text-white">{item.title}</h3>
+              {item.note && <p class="mt-1.5 text-sm leading-6 text-white/58">{item.note}</p>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  groups.length > 0 && (
+    <section class="bg-slate-50">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+        <div class="grid gap-6 lg:grid-cols-3">
+          {groups.map((group, i) => (
+            <section
+              class="flex h-full flex-col rounded-2xl border border-slate-200/60 bg-white p-7 shadow-sm shadow-slate-900/[0.04]"
+              data-reveal
+              style={`--reveal-delay:${i * 100}ms`}
+            >
+              <Icon
+                name={groupIcon[group.heading] ?? "tabler:point"}
+                class="mb-5 h-10 w-10 text-primary"
+              />
+              <h2 class="text-xl font-bold tracking-tight text-default">{group.heading}</h2>
+              <div class="mt-5 space-y-5 border-t border-slate-100 pt-5">
+                {group.items.map((item) => (
+                  <article>
+                    <h3 class="text-sm font-semibold text-default">{item.title}</h3>
+                    <p class="mt-1.5 text-pretty text-sm leading-7 text-muted">{item.body}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

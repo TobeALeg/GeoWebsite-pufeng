@@ -1,0 +1,222 @@
+---
+interface ProductImage {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+}
+
+interface Product {
+  name: string;
+  composition?: string;
+  colors?: string[];
+  sellingPoints?: string[];
+  image: ProductImage;
+}
+
+interface Category {
+  name: string;
+  slug?: string;
+  products: Product[];
+}
+
+interface GenderGroup {
+  gender: string;
+  slug?: string;
+  categories: Category[];
+}
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  lead?: string;
+  groups: GenderGroup[];
+  summary?: {
+    totalProducts?: number;
+    visibleProducts?: number;
+    missingImageProducts?: number;
+  };
+}
+
+const {
+  eyebrow = "产品目录",
+  heading = "产品展示",
+  lead,
+  groups = [],
+} = Astro.props as Props;
+
+const navGroups = groups.map((group) => ({
+  gender: group.gender,
+  categories: group.categories.map((category) => ({
+    gender: group.gender,
+    name: category.name,
+    href: `#${group.slug || group.gender}-${category.slug || category.name}`,
+  })),
+}));
+
+const colorPreview = (color: string) => {
+  const map: Record<string, string> = {
+    黑: "#171717",
+    白: "#f8fafc",
+    灰: "#9ca3af",
+    驼: "#b08968",
+    咖: "#7c4a2d",
+    棕: "#6b3f24",
+    红: "#b91c1c",
+    粉: "#f3a3b5",
+    蓝: "#2563eb",
+    兰: "#2563eb",
+    绿: "#4d7c0f",
+    黄: "#eab308",
+    紫: "#7e22ce",
+    米: "#e7dbc7",
+    杏: "#ead7bf",
+    橙: "#f97316",
+  };
+  const key = Object.keys(map).find((token) => color.includes(token));
+  return key ? map[key] : "#cbd5e1";
+};
+---
+
+<section class="bg-white">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
+    <div class="max-w-3xl" data-reveal>
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+      <h1 class="section-title mt-4">{heading}</h1>
+      {lead && <p class="section-lead">{lead}</p>}
+    </div>
+
+    {
+      navGroups.length > 0 && (
+        <nav
+          class="sticky top-[57px] z-20 mt-10 border-y border-slate-200 bg-white/94 py-3 backdrop-blur md:top-[65px]"
+          aria-label="产品分类"
+          data-reveal
+        >
+          <div class="flex items-center gap-6 overflow-x-auto pb-1">
+            {navGroups.map((group) => (
+              <div class="flex shrink-0 items-center gap-2">
+                <p class="shrink-0 text-sm font-bold text-primary">{group.gender}</p>
+                <div class="flex gap-2">
+                  {group.categories.map((item) => (
+                    <a
+                      href={item.href}
+                      class="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-default transition hover:border-primary/40 hover:text-primary"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </nav>
+      )
+    }
+
+    <div class="mt-12 space-y-14">
+      {
+        groups.map((group) => (
+          <section class="border-t border-slate-200 pt-7">
+            <header class="flex items-end justify-between gap-6">
+              <div>
+                <h2 class="text-2xl font-bold tracking-tight text-default">{group.gender}</h2>
+                <p class="mt-1 text-sm text-muted">
+                  {group.categories.length} 个系列 ·{" "}
+                  {group.categories.reduce((sum, category) => sum + category.products.length, 0)} 款
+                </p>
+              </div>
+            </header>
+
+            <div class="mt-8 space-y-12">
+              {
+                group.categories.map((category) => (
+                  <section
+                    id={`${group.slug || group.gender}-${category.slug || category.name}`}
+                    class="scroll-mt-32"
+                  >
+                    <header class="mb-5 flex items-end justify-between gap-4 border-l border-slate-200 pl-4">
+                      <div>
+                        <h3 class="text-lg font-bold tracking-tight text-default">{category.name}</h3>
+                        <p class="mt-1 text-sm text-muted">{category.products.length} 款</p>
+                      </div>
+                    </header>
+
+                    <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+                      {
+                        category.products.map((product) => (
+                          <article class="overflow-hidden rounded-md border border-slate-200 bg-white transition hover:border-primary/30 sm:rounded-lg">
+                            <figure class="bg-slate-100">
+                              <img
+                                src={product.image.src}
+                                alt={product.image.alt || product.name}
+                                width={product.image.width || 1200}
+                                height={product.image.height || 1200}
+                                loading="lazy"
+                                decoding="async"
+                                class="aspect-[4/5] w-full object-cover"
+                              />
+                            </figure>
+
+                            <div class="space-y-2.5 p-3 sm:space-y-3.5 sm:p-4">
+                              <div>
+                                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.08em] text-primary sm:text-[0.68rem] sm:tracking-[0.14em]">
+                                  {category.name}
+                                </p>
+                                <h4 class="mt-1 text-sm font-bold leading-snug tracking-tight text-default sm:mt-1.5 sm:text-base">
+                                  {product.name}
+                                </h4>
+                              </div>
+
+                              {product.composition && (
+                                <div>
+                                  <p class="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-muted sm:text-[0.68rem] sm:tracking-[0.12em]">产品成分</p>
+                                  <p class="mt-1 whitespace-pre-line text-[0.68rem] leading-4 text-default sm:mt-1.5 sm:text-xs sm:leading-5">
+                                    {product.composition}
+                                  </p>
+                                </div>
+                              )}
+
+                              {product.colors && product.colors.length > 0 && (
+                                <div>
+                                  <p class="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-muted sm:text-[0.68rem] sm:tracking-[0.12em]">颜色</p>
+                                  <ul class="mt-1.5 flex flex-wrap gap-1 sm:mt-2 sm:gap-1.5" aria-label="产品颜色色块">
+                                    {product.colors.map((color) => (
+                                      <li
+                                        class="h-3.5 w-3.5 rounded-[3px] border border-slate-300 sm:h-4 sm:w-4"
+                                        style={`background:${colorPreview(color)}`}
+                                        aria-hidden="true"
+                                      />
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+
+                              {product.sellingPoints && product.sellingPoints.length > 0 && (
+                                <div class="hidden sm:block">
+                                  <p class="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted">产品特色</p>
+                                  <ul class="mt-2 space-y-1.5">
+                                    {product.sellingPoints.slice(0, 4).map((point) => (
+                                      <li class="flex gap-2 text-xs leading-5 text-muted">
+                                        <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                                        <span>{point}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </div>
+                          </article>
+                        ))
+                      }
+                    </div>
+                  </section>
+                ))
+              }
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>

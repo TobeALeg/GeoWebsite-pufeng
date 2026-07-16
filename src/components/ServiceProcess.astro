@@ -1,0 +1,54 @@
+---
+/**
+ * 服务流程 — 横向连线时间线(参考客户提供的流程图)。
+ * 桌面横向连线,移动端纵向连线。
+ */
+interface Step {
+  title: string;
+  points: string[];
+}
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  lead?: string;
+  steps: Step[];
+}
+const { eyebrow = "服务流程", heading, lead, steps = [] } = Astro.props;
+---
+
+<section class="bg-white">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+    <div class="mx-auto max-w-3xl text-center" data-reveal>
+      {eyebrow && <p class="section-eyebrow justify-center">{eyebrow}</p>}
+      <h2 class="section-title mt-4">{heading}</h2>
+      {lead && <p class="section-lead mx-auto">{lead}</p>}
+    </div>
+
+    <ol class="mt-12 grid gap-y-8 sm:mt-16 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-5 lg:gap-x-4">
+      {
+        steps.map((step, i) => (
+          <li class="relative flex items-start gap-4 text-left sm:flex-col sm:items-center sm:text-center lg:px-2" data-reveal style={`--reveal-delay:${i * 110}ms`}>
+            {/* 连接线:仅大屏、非最后一个 */}
+            {i < steps.length - 1 && (
+              <span
+                class="absolute left-1/2 top-7 hidden h-px w-full bg-gradient-to-r from-primary/40 to-primary/10 lg:block"
+                aria-hidden="true"
+              />
+            )}
+            <div class="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-primary/30 bg-white text-sm font-bold text-primary shadow-sm sm:h-14 sm:w-14 sm:text-lg">
+              {String(i + 1).padStart(2, "0")}
+            </div>
+            <div class="min-w-0 flex-1 sm:flex-none">
+              <h3 class="text-base font-bold tracking-tight text-default sm:mt-5 sm:text-lg">{step.title}</h3>
+              <ul class="mt-1.5 space-y-1 sm:mt-3 sm:space-y-1.5">
+                {step.points.map((p) => (
+                  <li class="text-sm leading-6 text-muted">{p}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

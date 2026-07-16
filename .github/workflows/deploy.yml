@@ -1,0 +1,61 @@
+name: Deploy production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pufeng-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      DEPLOY_ROOT: ${{ vars.DEPLOY_ROOT }}
+      DEPLOY_BACKUP_ROOT: ${{ vars.DEPLOY_BACKUP_ROOT }}
+      HEALTHCHECK_URL: ${{ vars.HEALTHCHECK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - run: npm run verify
+      - name: Validate deployment configuration
+        run: |
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "$DEPLOY_ROOT"
+          test -n "$DEPLOY_BACKUP_ROOT"
+          test -n "$HEALTHCHECK_URL"
+          test -n "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}"
+          test -n "${{ secrets.DEPLOY_KNOWN_HOSTS }}"
+      - name: Configure SSH
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' '${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' '${{ secrets.DEPLOY_KNOWN_HOSTS }}' > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+      - name: Backup current release
+        run: |
+          stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+          backup="$DEPLOY_BACKUP_ROOT/${stamp}-${GITHUB_SHA:0:12}-before.tgz"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_BACKUP_ROOT' '$DEPLOY_ROOT'; if [ -n \"\$(find '$DEPLOY_ROOT' -mindepth 1 -maxdepth 1 -print -quit)\" ]; then tar -C '$DEPLOY_ROOT' -czf '$backup' .; fi"
+      - name: Deploy static site
+        run: |
+          rsync -az --delete --delay-updates dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_ROOT/"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "printf '%s\n' '$GITHUB_SHA' > '$DEPLOY_ROOT/.deploy-revision'"
+      - name: Verify production
+        run: curl --fail --silent --show-error --retry 5 --retry-delay 3 "$HEALTHCHECK_URL"

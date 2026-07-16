@@ -1,0 +1,80 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  eyebrow?: string;
+  image?: string;
+  visual?: "default" | "wanwang";
+}
+
+const { title, subtitle, eyebrow, image, visual = "default" } = Astro.props;
+---
+
+{
+  visual === "wanwang" ? (
+    <section class="relative flex min-h-[22rem] items-center justify-center overflow-hidden bg-slate-900 text-center md:min-h-[25rem]">
+      {
+        image && (
+          <img
+            src={image}
+            alt=""
+            width="1920"
+            height="640"
+            loading="eager"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+        )
+      }
+      <div class="absolute inset-0 bg-black/50"></div>
+      <div class="relative mx-auto max-w-4xl px-4 py-20 text-white sm:px-6">
+        <h1 class="text-balance font-heading text-4xl font-black leading-tight tracking-normal md:text-6xl">
+          {title}
+        </h1>
+        {
+          subtitle && (
+            <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg font-semibold leading-relaxed text-white/90">
+              {subtitle}
+            </p>
+          )
+        }
+      </div>
+    </section>
+  ) : (
+    <section class="relative overflow-hidden bg-slate-900">
+      {
+        image && (
+          <img
+            src={image}
+            alt=""
+            width="1920"
+            height="640"
+            loading="eager"
+            class="absolute inset-0 h-full w-full object-cover opacity-40"
+          />
+        )
+      }
+      <div class="absolute inset-0 bg-[linear-gradient(100deg,rgba(15,23,42,0.92)_0%,rgba(15,23,42,0.7)_55%,rgba(15,23,42,0.45)_100%)]"></div>
+      <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+        <div class="max-w-3xl aw-fade">
+          {
+            eyebrow && (
+              <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3.5 py-1 text-xs font-semibold tracking-[0.16em] text-white/85">
+                {eyebrow}
+              </p>
+            )
+          }
+          <h1 class="text-balance font-heading text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
+            {title}
+          </h1>
+          {
+            subtitle && (
+              <p class="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-white/75">
+                {subtitle}
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </section>
+  )
+}

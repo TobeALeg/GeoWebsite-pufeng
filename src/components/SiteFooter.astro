@@ -1,0 +1,109 @@
+---
+import { Icon } from "astro-icon/components";
+import { loadSiteContent, type SiteContent } from "@/lib/site";
+
+interface Props {
+  site?: SiteContent;
+}
+
+const { site = loadSiteContent() } = Astro.props as Props;
+const footer = site.global.footer;
+const navItems = site.global.navigation.items;
+const year = new Date().getFullYear();
+const telHref = footer.phone ? `tel:${footer.phone.replace(/\s/g, "")}` : undefined;
+const badge = footer.badge;
+const bottomNote = footer.bottom_note ?? footer.one_line_definition;
+---
+
+<footer class="bg-slate-950 text-white">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
+      {/* 品牌 */}
+      <div class="md:col-span-5">
+        <a class="text-xl font-bold tracking-tight text-white" href="/">{footer.company_name}</a>
+        <p class="mt-4 max-w-md text-sm leading-7 text-white/55">{footer.one_line_definition}</p>
+        {
+          badge && (
+            <p class="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs font-medium text-white/70">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              {badge}
+            </p>
+          )
+        }
+      </div>
+
+      {/* 导航 */}
+      <nav class="md:col-span-3" aria-label="页脚导航">
+        <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">网站导航</h2>
+        <ul class="mt-5 space-y-3 text-sm">
+          {
+            navItems.map((item) => (
+              <li>
+                <a class="text-white/70 transition hover:text-white" href={item.route}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      {/* 联系 */}
+      <div class="md:col-span-4">
+        <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">联系我们</h2>
+        <ul class="mt-5 space-y-4 text-sm">
+          {
+            footer.region && (
+              <li class="flex gap-3 text-white/70">
+                <Icon name="tabler:map-pin" class="mt-0.5 h-5 w-5 flex-none text-white/40" />
+                <span class="leading-6">{footer.region}</span>
+              </li>
+            )
+          }
+          {
+            footer.contact_person && (
+              <li class="flex gap-3 text-white/70">
+                <Icon name="tabler:user" class="mt-0.5 h-5 w-5 flex-none text-white/40" />
+                <span class="leading-6">
+                  联系人
+                  <span class="mt-0.5 block font-semibold text-white">{footer.contact_person}</span>
+                </span>
+              </li>
+            )
+          }
+          {
+            footer.phone && (
+              <li class="flex gap-3 text-white/70">
+                <Icon name="tabler:phone" class="mt-0.5 h-5 w-5 flex-none text-white/40" />
+                <span class="leading-6">
+                  手机 / 微信
+                  <a class="mt-0.5 block font-semibold text-white transition hover:text-emerald-300" href={telHref}>
+                    {footer.phone}
+                  </a>
+                </span>
+              </li>
+            )
+          }
+          {
+            footer.email && (
+              <li class="flex gap-3 text-white/70">
+                <Icon name="tabler:mail" class="mt-0.5 h-5 w-5 flex-none text-white/40" />
+                <span class="leading-6">
+                  邮箱
+                  <a class="mt-0.5 block font-semibold text-white transition hover:text-emerald-300" href={`mailto:${footer.email}`}>
+                    {footer.email}
+                  </a>
+                </span>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-3 border-t border-white/10 pt-7 text-xs text-white/45 md:flex-row md:items-center md:justify-between">
+      <p>© {year} {footer.company_name} 版权所有</p>
+      <p>{bottomNote}</p>
+    </div>
+  </div>
+</footer>

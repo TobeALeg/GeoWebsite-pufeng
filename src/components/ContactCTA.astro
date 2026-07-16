@@ -1,0 +1,59 @@
+---
+/**
+ * 联系 / 询价 CTA。锚点 #contact 供导航与 hero 按钮跳转。
+ */
+interface ContactItem {
+  label: string;
+  value: string;
+  href?: string;
+}
+interface Props {
+  heading: string;
+  lead?: string;
+  contacts: ContactItem[];
+  cta?: { label: string; url: string };
+}
+const { heading, lead, contacts = [], cta } = Astro.props;
+---
+
+<section id="contact" class="scroll-mt-20 bg-primary text-white">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16">
+      <div data-reveal>
+        <h2 class="font-heading text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+          {heading}
+        </h2>
+        {lead && <p class="mt-4 max-w-xl text-pretty leading-7 text-white/80 sm:text-lg">{lead}</p>}
+        {
+          cta && (
+            <a
+              href={cta.url}
+              class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-bold text-primary transition hover:bg-white/90"
+            >
+              {cta.label}
+            </a>
+          )
+        }
+      </div>
+
+      <dl class="grid gap-px overflow-hidden rounded-2xl bg-white/15 sm:grid-cols-2" data-reveal style="--reveal-delay:100ms">
+        {
+          contacts.map((c) => (
+            <div class="bg-primary/95 p-6">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-white/60">{c.label}</dt>
+              <dd class="mt-2 text-base font-semibold text-white">
+                {c.href ? (
+                  <a href={c.href} class="transition hover:text-white/80">
+                    {c.value}
+                  </a>
+                ) : (
+                  c.value
+                )}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>

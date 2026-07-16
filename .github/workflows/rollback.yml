@@ -1,0 +1,58 @@
+name: Roll back production
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: Git commit SHA to deploy
+        required: true
+        type: string
+      confirm:
+        description: Type ROLLBACK to confirm
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pufeng-production
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    if: inputs.confirm == 'ROLLBACK'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      DEPLOY_ROOT: ${{ vars.DEPLOY_ROOT }}
+      DEPLOY_BACKUP_ROOT: ${{ vars.DEPLOY_BACKUP_ROOT }}
+      HEALTHCHECK_URL: ${{ vars.HEALTHCHECK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.revision }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run verify
+      - name: Configure SSH
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' '${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' '${{ secrets.DEPLOY_KNOWN_HOSTS }}' > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+      - name: Backup and deploy selected revision
+        run: |
+          stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+          backup="$DEPLOY_BACKUP_ROOT/${stamp}-${GITHUB_SHA:0:12}-pre-rollback.tgz"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_BACKUP_ROOT' '$DEPLOY_ROOT'; tar -C '$DEPLOY_ROOT' -czf '$backup' ."
+          rsync -az --delete --delay-updates dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_ROOT/"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "printf '%s\n' '$GITHUB_SHA' > '$DEPLOY_ROOT/.deploy-revision'"
+          curl --fail --silent --show-error --retry 5 --retry-delay 3 "$HEALTHCHECK_URL"

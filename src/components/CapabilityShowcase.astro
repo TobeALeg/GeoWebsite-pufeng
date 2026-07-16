@@ -1,0 +1,123 @@
+---
+/**
+ * 核心能力 — 自有一体化产线 + 工艺。左文右图(图为真实车间)。
+ */
+interface CapabilityItem {
+  value: string;
+  unit?: string;
+  label: string;
+}
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  lead?: string;
+  paragraphs?: string[];
+  capabilities?: CapabilityItem[];
+  crafts?: string[];
+  media: { src: string; alt: string; caption?: string }[];
+  video?: { src: string; poster?: string };
+}
+const {
+  eyebrow = "一体化产线",
+  heading,
+  lead,
+  paragraphs = [],
+  capabilities = [],
+  crafts = [],
+  media = [],
+  video,
+} = Astro.props;
+const mainImg = media[0];
+const subImg = media[1];
+---
+
+<section class="bg-white">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div data-reveal>
+        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+        <h2 class="section-title mt-4">{heading}</h2>
+        {lead && <p class="section-lead">{lead}</p>}
+        <div class="mt-6 space-y-4 text-pretty leading-7 text-muted">
+          {paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+
+        {
+          capabilities.length > 0 && (
+            <dl class="mt-8 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-slate-100 pt-8 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+              {capabilities.map((c) => (
+                <div>
+                  <dt class="text-3xl font-bold tracking-tight text-primary">
+                    {c.value}
+                    {c.unit && <span class="ml-0.5 text-sm font-semibold text-slate-400">{c.unit}</span>}
+                  </dt>
+                  <dd class="mt-1 text-sm font-medium text-muted">{c.label}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+
+        {
+          crafts.length > 0 && (
+            <div class="mt-8">
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-secondary">擅长工艺</p>
+              <ul class="mt-4 flex flex-wrap gap-2.5">
+                {crafts.map((craft) => (
+                  <li class="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-sm font-medium text-default">
+                    {craft}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="relative" data-reveal style="--reveal-delay:120ms">
+        <div class="overflow-hidden rounded-3xl shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5">
+          {
+            video ? (
+              <video
+                class="aspect-[4/3] h-full w-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
+                poster={video.poster}
+                aria-label={mainImg?.alt}
+              >
+                <source src={video.src} type="video/mp4" />
+              </video>
+            ) : (
+              mainImg && (
+                <img
+                  src={mainImg.src}
+                  alt={mainImg.alt}
+                  width="1200"
+                  height="900"
+                  loading="lazy"
+                  class="aspect-[4/3] h-full w-full object-cover"
+                />
+              )
+            )
+          }
+        </div>
+        {
+          subImg && (
+            <div class="absolute -bottom-8 -left-6 hidden w-44 overflow-hidden rounded-2xl border-4 border-white shadow-lg shadow-slate-900/15 sm:block lg:w-52">
+              <img
+                src={subImg.src}
+                alt={subImg.alt}
+                width="420"
+                height="320"
+                loading="lazy"
+                class="aspect-[4/3] h-full w-full object-cover"
+              />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

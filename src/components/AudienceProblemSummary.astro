@@ -1,0 +1,51 @@
+---
+interface Props {
+  heading?: string;
+  audiences: { name: string; description: string }[];
+  problems: { title: string; scenario?: string }[];
+}
+const { heading = "服务对象", audiences, problems } = Astro.props;
+---
+
+<section class="bg-white">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
+    <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <h2 class="section-title">
+        {heading}
+      </h2>
+      <p class="mt-4 text-lg leading-relaxed text-muted">
+        无论你是企业采购还是外贸商，小单也有正规工厂接
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-8 lg:grid-cols-2">
+      <div class="h-full overflow-hidden rounded-2xl bg-white shadow-sm shadow-slate-900/5 ring-1 ring-slate-200/50" data-reveal>
+        <div class="border-t-4 border-primary px-8 pt-6 pb-8">
+          <h3 class="text-xl font-bold tracking-tight text-default">适合谁</h3>
+          <ul class="mt-5 space-y-3">
+            {audiences.map((a) => (
+              <li class="flex gap-3 text-pretty leading-7 text-muted">
+                <span class="mt-2 h-2 w-2 flex-none rounded-full bg-primary/70"></span>
+                <span>{a.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="h-full overflow-hidden rounded-2xl bg-white shadow-sm shadow-slate-900/5 ring-1 ring-slate-200/50" data-reveal style="--reveal-delay:110ms">
+        <div class="border-t-4 border-amber-500 px-8 pt-6 pb-8">
+          <h3 class="text-xl font-bold tracking-tight text-default">解决什么</h3>
+          <ul class="mt-5 space-y-3">
+            {problems.map((p) => (
+              <li class="flex gap-3 text-pretty leading-7 text-muted">
+                <span class="mt-2 h-2 w-2 flex-none rounded-full bg-amber-500/70"></span>
+                <span>{p.title}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

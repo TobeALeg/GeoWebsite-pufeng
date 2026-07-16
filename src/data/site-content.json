@@ -1,0 +1,1677 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "tenant_id": "pufeng",
+    "source_company_knowledge_version": "1",
+    "source_blueprint_version": "1.0",
+    "locale": "zh-CN",
+    "generated_at": "2026-07-02",
+    "status": "ready"
+  },
+  "global": {
+    "navigation": {
+      "brand": "濮丰服饰",
+      "items": [
+        {
+          "label": "首页",
+          "route": "/",
+          "page_id": "home"
+        },
+        {
+          "label": "产品展示",
+          "route": "/products",
+          "page_id": "products"
+        },
+        {
+          "label": "常见问题",
+          "route": "/faq",
+          "page_id": "faq"
+        },
+        {
+          "label": "关于我们",
+          "route": "/about",
+          "page_id": "about"
+        }
+      ],
+      "cta": {
+        "label": "联系我们",
+        "href": "#contact"
+      }
+    },
+    "footer": {
+      "company_name": "桐乡市濮丰服饰股份有限公司",
+      "one_line_definition": "位于“中国羊毛衫名镇”濮院、给多家一二线服装品牌有长期合作，主营中高档羊毛衫/针织衫，并提供约100件起订的小批量定制工装与外贸服装代工。",
+      "region": "浙江省桐乡市濮院镇",
+      "contact_person": "高玉柱",
+      "phone": "138 6738 1555",
+      "external_profile_ids": []
+    }
+  },
+  "pages": [
+    {
+      "id": "home",
+      "route": "/",
+      "page_type": "home",
+      "title": "濮丰服饰 — 濮院定制工装·外贸服装小单代工的正规针织服装厂",
+      "meta_description": "濮丰服饰从濮院毛衫产业带起步，长期深耕针织服装研发、生产与销售，并以资质证书与荣誉墙展示企业沉淀。",
+      "canonical_url": "https://pufengwool.com/",
+      "header": null,
+      "schema_jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "桐乡市濮丰服饰股份有限公司",
+          "url": "https://pufengwool.com",
+          "description": "濮丰服饰从濮院毛衫产业带起步，长期深耕针织服装研发、生产与销售，并以资质证书与荣誉墙展示企业沉淀。",
+          "alternateName": [
+            "濮丰服饰",
+            "濮丰",
+            "桐乡濮丰",
+            "pufeng"
+          ],
+          "foundingDate": "2013",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "浙江省桐乡市濮院镇",
+            "addressCountry": "CN"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "桐乡市濮丰服饰股份有限公司",
+          "url": "https://pufengwool.com"
+        }
+      ],
+      "modules": [
+        {
+          "module_type": "HomeHero",
+          "component": "HomeHero",
+            "props": {
+              "companyName": "濮丰服饰",
+              "headline": "100件起订，也能享受高级品牌制作标准",
+              "oneLiner": "濮院正规针织厂，承接小批量定制工装与外贸服装代工，出货质检、合同凭证和交期都有明确安排。",
+            "highlights": [
+              "约100件即可起订",
+              "出货前质检",
+              "可签正规合同",
+              "自有产线交期可控"
+            ],
+            "cta": {
+              "label": "联系我们 / 询价",
+              "url": "#contact"
+            },
+            "video": {
+              "src": "/video/pufeng/hero-knitting.mp4",
+              "poster": "/images/pufeng/workshop-knitting.jpg"
+            }
+          },
+          "media": [
+            {
+              "slot": "hero",
+              "usage": "hero",
+              "status": "resolved",
+              "src": "/images/pufeng/workshop-knitting.jpg",
+              "alt": "濮丰服饰针织车间与产线视频",
+              "placeholder": false,
+              "caption": ""
+            }
+          ]
+        },
+        {
+          "module_type": "StatBand",
+          "component": "StatBand",
+          "props": {
+            "stats": [
+              {
+                "value": "300",
+                "unit": "台",
+                "label": "电脑横机",
+                "note": "自有产线,款式与交期自己把控"
+              },
+              {
+                "value": "200",
+                "unit": "台",
+                "label": "全自动电脑平车",
+                "note": "从毛纱到成衣一体化生产"
+              },
+              {
+                "value": "300",
+                "unit": "万件/年",
+                "label": "羊毛衫与针织衫产能",
+                "note": "临时/加急小单也接得住"
+              },
+              {
+                "value": "100",
+                "unit": "件",
+                "label": "小批量起订",
+                "note": "大厂不接的小单也接得住"
+              }
+            ]
+          },
+          "media": []
+        },
+        {
+          "module_type": "CapabilityShowcase",
+          "component": "CapabilityShowcase",
+          "props": {
+            "eyebrow": "一体化产线",
+            "heading": "从毛纱到成衣，一套自有产线全程把控",
+            "lead": "位于中国羊毛衫名镇濮院，自有针织产线覆盖纺纱、织造到成衣的主要环节。",
+            "paragraphs": [
+              "长期与品牌服饰密切合作，沉淀下来的工艺和质检标准，也能用于小批量定制。"
+            ],
+            "capabilities": [],
+            "crafts": [
+              "电脑横机针织",
+              "针梭织拼接",
+              "手工勾针",
+              "手工棒针",
+              "刺绣",
+              "针织印花"
+            ],
+            "media": [
+              {
+                "src": "/images/pufeng/workshop-knitting.jpg",
+                "alt": "濮丰电脑横机针织车间"
+              },
+              {
+                "src": "/images/pufeng/wool-top.jpg",
+                "alt": "纺纱车间的羊毛毛条"
+              }
+            ],
+            "video": {
+              "src": "/video/pufeng/workshop-overview.mp4",
+              "poster": "/images/pufeng/workshop-knitting.jpg"
+            }
+          },
+          "media": []
+        },
+        {
+          "module_type": "OfferingOverview",
+          "component": "OfferingOverview",
+          "props": {
+            "offerings": [
+              {
+                "name": "小件代工",
+                "summary": "小批量服装定制与代工，约 100 件即可起订，自有产线生产、出货质检、可出正规合同与质检报告。",
+                "image": "/images/offer-workwear.webp"
+              },
+              {
+                "name": "成品采购",
+                "summary": "毛纱→面料→成衣一体化生产中高档羊毛衫、针织衫，按品牌标准做品牌代工。",
+                "image": "/images/offer-knitwear.webp"
+              },
+              {
+                "name": "原材料出售",
+                "summary": "对外销售自产纺织面料与毛纱。",
+                "image": "/images/offer-fabric.webp"
+              }
+            ]
+          },
+          "media": []
+        },
+        {
+          "module_type": "ServiceProcess",
+          "component": "ServiceProcess",
+          "props": {
+            "eyebrow": "服务流程",
+            "heading": "下单到交付，五步走完",
+            "lead": "从需求沟通到验货发货，每一步都有明确节点，适合小批量定制和外贸小单。",
+            "steps": [
+              {
+                "title": "发需求",
+                "points": [
+                  "款式图 / 样衣 / 数量",
+                  "材质与颜色要求"
+                ]
+              },
+              {
+                "title": "1天内报价",
+                "points": [
+                  "核算工艺和数量",
+                  "给出交期预估"
+                ]
+              },
+              {
+                "title": "打样确认",
+                "points": [
+                  "确认版型与细节",
+                  "确认后再排大货"
+                ]
+              },
+              {
+                "title": "生产跟进",
+                "points": [
+                  "有专人跟单",
+                  "关键节点主动同步"
+                ]
+              },
+              {
+                "title": "验货发货",
+                "points": [
+                  "出厂前质检",
+                  "按约定方式发货"
+                ]
+              }
+            ]
+          },
+          "media": []
+        },
+        {
+          "module_type": "MaterialSourcing",
+          "component": "MaterialSourcing",
+          "props": {
+            "eyebrow": "原料溯源",
+            "heading": "全球优选羊毛，源头可追溯",
+            "lead": "好成衣，先从一缕好羊毛开始。原料从牧场到工厂全程留痕，品质批次有迹可循。",
+            "steps": [
+              {
+                "title": "牧场甄选",
+                "desc": "优选羊毛产区，按纤维细度与品质分级采购。"
+              },
+              {
+                "title": "拍卖竞采",
+                "desc": "通过国际羊毛拍卖体系竞采，品质与批次可溯。"
+              },
+              {
+                "title": "报关进口",
+                "desc": "正规报关进口，海关查验合规清关。"
+              },
+              {
+                "title": "纺纱织造",
+                "desc": "进厂分梳、纺成毛条与毛纱，供横机织造。"
+              }
+            ],
+            "gallery": [
+              {
+                "src": "/images/pufeng/source-grassland.jpg",
+                "alt": "草原牧场放牧的羊群"
+              },
+              {
+                "src": "/images/pufeng/source-customs.jpg",
+                "alt": "海关查验进口羊毛"
+              },
+              {
+                "src": "/images/pufeng/source-auction.jpg",
+                "alt": "国际羊毛拍卖样品"
+              }
+            ]
+          },
+          "media": []
+        },
+        {
+          "module_type": "AudienceProblemSummary",
+          "component": "AudienceProblemSummary",
+          "props": {
+            "audiences": [
+              {
+                "name": "企业行政/HR/采购（要给员工订工装、工作服、团服）",
+                "description": "企业行政/HR/采购（要给员工订工装、工作服、团服）"
+              },
+              {
+                "name": "外贸公司/外贸业务员（接了海外/跨境小单，要找能代工并出凭证的工厂）",
+                "description": "外贸公司/外贸业务员（接了海外/跨境小单，要找能代工并出凭证的工厂）"
+              },
+              {
+                "name": "中小商家、连锁门店（要小批量定制员工服）",
+                "description": "中小商家、连锁门店（要小批量定制员工服）"
+              },
+              {
+                "name": "跨境电商卖家/小外贸商（要有质检报告、正规订单凭证的服装代工）",
+                "description": "跨境电商卖家/小外贸商（要有质检报告、正规订单凭证的服装代工）"
+              }
+            ],
+            "problems": [
+              {
+                "title": "想小批量定制工装/团服，但正规大厂起订量上千件、不接小单",
+                "scenario": "想小批量定制工装/团服，但正规大厂起订量上千件、不接小单"
+              },
+              {
+                "title": "1688/淘宝上的低价工装多是小作坊或中间商，给不出质检报告、用料没保障",
+                "scenario": "1688/淘宝上的低价工装多是小作坊或中间商，给不出质检报告、用料没保障"
+              },
+              {
+                "title": "外贸公司接了海外小单/翻单，量不大，正规大厂不接、小作坊又给不了质检报告和正规凭证",
+                "scenario": "外贸公司接了海外小单/翻单，量不大，正规大厂不接、小作坊又给不了质检报告和正规凭证"
+              },
+              {
+                "title": "做外贸小单，需要质检报告和正规订单凭证去跟海外客户/跨境平台背书，但小供应商出不了",
+                "scenario": "做外贸小单，需要质检报告和正规订单凭证去跟海外客户/跨境平台背书，但小供应商出不了"
+              }
+            ]
+          },
+          "media": []
+        },
+        {
+          "module_type": "WhyUs",
+          "component": "WhyUs",
+          "props": {
+            "heading": "小批量、外贸小单,濮丰服饰怎么做?",
+            "cards": [
+              {
+                "lead": "性价比高",
+                "detail": "自有工厂、濮院产业带就近采购原辅料，省掉中间商，小批量也给得出有竞争力的价格"
+              },
+              {
+                "lead": "用料按代工标准",
+                "detail": "长期为男女装品牌做代工，同样的料用在定制工装上，质量优于普通小单工厂"
+              },
+              {
+                "lead": "公司正规、可出质检报告",
+                "detail": "2013年成立的股份公司，浙江省科技型中小企业、阿里巴巴1688超级工厂，工艺无染色/印花/水洗环节、合规门槛低，能给小单也出具质检报告与正规合同——外贸/招标场景可直接背书"
+              },
+              {
+                "lead": "约100件即可起订",
+                "detail": "大型工装厂普遍起订上千件，濮丰专补小批量缺口"
+              },
+              {
+                "lead": "一体化产线、产能充足",
+                "detail": "从毛纱到成衣，临时/加急小单也接得住、交期可控"
+              }
+            ]
+          },
+          "media": []
+        },
+        {
+          "module_type": "ContactCTA",
+          "component": "ContactCTA",
+          "props": {
+            "heading": "小单也想找正规工厂？聊聊你的需求",
+            "lead": "把款式图、数量和材质要求发给我们，1个工作日内给到详细报价。也欢迎来厂考察产线与样品。",
+            "cta": {
+              "label": "查看产品展示",
+              "url": "/products"
+            },
+            "contacts": [
+              {
+                "label": "工厂地址",
+                "value": "浙江省嘉兴市桐乡市濮院镇濮院大道2991号13栋"
+              },
+              {
+                "label": "手机 / 微信",
+                "value": "138 6738 1555",
+                "href": "tel:13867381555"
+              },
+              {
+                "label": "起订量",
+                "value": "约 100 件起订"
+              },
+              {
+                "label": "报价时效",
+                "value": "1 个工作日内回复"
+              }
+            ]
+          },
+          "media": [],
+          "anchor": "contact"
+        }
+      ],
+      "freshness": "fact_change"
+    },
+    {
+      "id": "products",
+      "route": "/products",
+      "page_type": "products",
+      "title": "濮丰服饰羊毛衫产品展示",
+      "meta_description": "濮丰服饰男装与女装羊毛衫产品展示，按系列查看产品图、品名、产品成分、颜色和产品特色。",
+      "canonical_url": "https://pufengwool.com/products",
+      "header": null,
+      "schema_jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "濮丰服饰的产品与服务",
+          "url": "https://pufengwool.com/products",
+          "about": {
+            "@type": "Organization",
+            "name": "桐乡市濮丰服饰股份有限公司"
+          }
+        }
+      ],
+      "modules": [
+        {
+          "module_type": "ProductCatalog",
+          "component": "ProductCatalog",
+          "props": {
+            "eyebrow": "产品目录",
+            "heading": "男装与女装羊毛衫产品",
+            "lead": "按男装、女装和系列查看濮丰当前可展示的羊毛衫款式。",
+            "groups": [
+              {
+                "gender": "男装",
+                "slug": "men",
+                "categories": [
+                  {
+                    "name": "双层复合羊毛系列",
+                    "slug": "double-layer-wool",
+                    "products": [
+                      {
+                        "name": "半高领鱼骨纹羊毛衫 （26年新品）",
+                        "composition": "面层：100%羊毛\n里层：100聚酯纤维",
+                        "colors": [
+                          "深灰",
+                          "黑色",
+                          "橄榄棕",
+                          "花驼",
+                          "黑红",
+                          "深兰",
+                          "咖色"
+                        ],
+                        "sellingPoints": [
+                          "鱼骨纹肌理细腻，商务内搭更有层次",
+                          "半高领包覆颈部，通勤穿着利落",
+                          "双层复合结构，外观挺括不臃肿"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pfd2601.webp",
+                          "alt": "半高领鱼骨纹羊毛衫 （26年新品）",
+                          "width": 1400,
+                          "height": 1400
+                        }
+                      },
+                      {
+                        "name": "半高领鱼骨纹羊毛衫 （26年新品）",
+                        "composition": "面层：100%羊毛\n里层：100聚酯纤维",
+                        "colors": [
+                          "深灰",
+                          "黑色",
+                          "橄榄棕",
+                          "花驼",
+                          "黑红",
+                          "深兰",
+                          "咖色"
+                        ],
+                        "sellingPoints": [
+                          "鱼骨纹肌理细腻，商务内搭更有层次",
+                          "半高领包覆颈部，通勤穿着利落",
+                          "双层复合结构，外观挺括不臃肿"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pfd2602.webp",
+                          "alt": "半高领鱼骨纹羊毛衫 （26年新品）",
+                          "width": 1400,
+                          "height": 1400
+                        }
+                      },
+                      {
+                        "name": "半高领羊毛衫（26年新品）",
+                        "composition": "面层：100%羊毛\n里层：100聚酯纤维",
+                        "colors": [
+                          "黑色",
+                          "深驼",
+                          "深雾灰",
+                          "深蓝灰",
+                          "丰中灰",
+                          "深棕",
+                          "香芋夹花"
+                        ],
+                        "sellingPoints": [
+                          "简洁半高领，适合商务内搭",
+                          "双层复合结构，穿着挺括不厚重",
+                          "表面细腻哑光，通勤感干净"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf2592.webp",
+                          "alt": "半高领羊毛衫（26年新品）",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "半高领鱼骨纹羊毛衫 （26年新品）",
+                        "composition": "面层：100%羊毛\n里层：100聚酯纤维",
+                        "colors": [
+                          "黑色",
+                          "深驼",
+                          "深雾灰",
+                          "深蓝灰",
+                          "丰中灰",
+                          "深棕",
+                          "香芋夹花"
+                        ],
+                        "sellingPoints": [
+                          "鱼骨纹肌理提升层次感",
+                          "半高领版型利落保暖",
+                          "双层复合结构，单穿内搭都稳妥"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf2593.webp",
+                          "alt": "半高领鱼骨纹羊毛衫 （26年新品）",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "100%精纺羊毛系列",
+                    "slug": "fine-wool",
+                    "products": [
+                      {
+                        "name": "半高领 羊毛衫（26支）",
+                        "composition": "100%绵羊毛",
+                        "colors": [
+                          "彩青兰",
+                          "纯灰",
+                          "大红",
+                          "海空兰",
+                          "黑红",
+                          "黑色",
+                          "灰色",
+                          "夹花绿",
+                          "墨绿",
+                          "纱青绿",
+                          "上青",
+                          "铁灰",
+                          "驼色"
+                        ],
+                        "sellingPoints": [
+                          "细密平整织面，通勤内搭清爽",
+                          "半高领版型包覆颈部，秋冬层搭利落",
+                          "吸湿透气，久坐办公不易闷"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf072.webp",
+                          "alt": "半高领 羊毛衫（26支）",
+                          "width": 800,
+                          "height": 800
+                        }
+                      },
+                      {
+                        "name": "Polo 翻领 羊毛衫（26支）",
+                        "composition": "100%绵羊毛",
+                        "colors": [
+                          "上青",
+                          "黑红",
+                          "棕色",
+                          "黄金咖",
+                          "彩青兰",
+                          "纱青绿",
+                          "黑灰",
+                          "驼色",
+                          "深灰",
+                          "灰色",
+                          "黑色"
+                        ],
+                        "sellingPoints": [
+                          "Polo 翻领提升正式感",
+                          "细密织面，单穿更有型",
+                          "通勤和商务休闲都好搭"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf1870.webp",
+                          "alt": "Polo 翻领 羊毛衫（26支）",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "Polo 翻领 羊毛衫（30支）",
+                        "composition": "100%绵羊毛",
+                        "colors": [
+                          "彩中灰",
+                          "海空兰",
+                          "黑色",
+                          "花紫红",
+                          "夹花绿",
+                          "卡其绿",
+                          "青黑灰",
+                          "青丽咖",
+                          "深彩兰",
+                          "驼色",
+                          "新花兰"
+                        ],
+                        "sellingPoints": [
+                          "Polo 翻领轮廓利落，适合商务休闲",
+                          "细腻平整织面，贴肤少刺感",
+                          "轻薄内搭，外穿不显厚重"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pfsh261870.webp",
+                          "alt": "Polo 翻领 羊毛衫（30支）",
+                          "width": 800,
+                          "height": 800
+                        }
+                      },
+                      {
+                        "name": "半高领 羊毛衫（30支）",
+                        "composition": "100%绵羊毛",
+                        "colors": [
+                          "海空蓝",
+                          "黑色",
+                          "灰色",
+                          "军绿",
+                          "米色",
+                          "上青",
+                          "深灰",
+                          "驼色",
+                          "夜兰",
+                          "棕咖"
+                        ],
+                        "sellingPoints": [
+                          "半高领包覆颈部，内搭外穿都顺",
+                          "细腻平整织面，贴肤少刺感",
+                          "轻薄保暖，叠穿不臃肿"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf076.webp",
+                          "alt": "半高领 羊毛衫（30支）",
+                          "width": 1400,
+                          "height": 1400
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "包芯纱针织系列",
+                    "slug": "core-spun-knit",
+                    "products": [
+                      {
+                        "name": "双面圆领 男式针织衫 （包芯纱48支）",
+                        "composition": "48.4%聚酯纤维36.7%腈纶14.9%锦纶",
+                        "colors": [
+                          "纯灰",
+                          "葡萄紫",
+                          "彩青兰",
+                          "夹花绿",
+                          "纱青绿",
+                          "咖啡",
+                          "黑色",
+                          "军绿",
+                          "花石灰",
+                          "花纱蓝",
+                          "海空蓝"
+                        ],
+                        "sellingPoints": [
+                          "双面结构更挺括，穿着不易松垮",
+                          "圆领基础版型，通勤休闲都好搭",
+                          "细腻弹力手感，活动不紧绷"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf260005.webp",
+                          "alt": "双面圆领 男式针织衫 （包芯纱48支）",
+                          "width": 1045,
+                          "height": 1400
+                        }
+                      },
+                      {
+                        "name": "双免半高领 男式针织衫 （包芯纱48支）",
+                        "composition": "47.8%聚酯纤维37.1%腈纶15.1%锦纶",
+                        "colors": [
+                          "彩青蓝",
+                          "纯灰",
+                          "海空蓝",
+                          "黑色",
+                          "花纱蓝",
+                          "花石灰",
+                          "夹花绿",
+                          "咖啡",
+                          "咖红",
+                          "葡萄紫",
+                          "纱青绿"
+                        ],
+                        "sellingPoints": [
+                          "半高领版型，颈部更利落",
+                          "双面结构支撑度好，穿着不易松垮",
+                          "弹力充足，活动不紧绷"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf260003.webp",
+                          "alt": "双免半高领 男式针织衫 （包芯纱48支）",
+                          "width": 1045,
+                          "height": 1400
+                        }
+                      },
+                      {
+                        "name": "单面半高领 男式针织衫 （包芯纱48支）",
+                        "composition": "47.5%聚酯纤维37.5%腈纶15.0%锦纶",
+                        "colors": [
+                          "彩青蓝",
+                          "纯灰",
+                          "海空蓝",
+                          "黑色",
+                          "花纱蓝",
+                          "花石灰",
+                          "夹花绿",
+                          "咖啡",
+                          "咖红",
+                          "葡萄紫",
+                          "深海蓝",
+                          "天空蓝"
+                        ],
+                        "sellingPoints": [
+                          "单面织法轻薄，适合内搭",
+                          "半高领简洁利落，通勤穿着不臃肿",
+                          "弹力手感，日常活动更自在"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pf260002.webp",
+                          "alt": "单面半高领 男式针织衫 （包芯纱48支）",
+                          "width": 1400,
+                          "height": 1400
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "功能T恤系列",
+                    "slug": "t",
+                    "products": [
+                      {
+                        "name": "无痕短袖T恤",
+                        "composition": "100%聚酯纤维",
+                        "colors": [
+                          "黑色",
+                          "深蓝",
+                          "上青"
+                        ],
+                        "sellingPoints": [
+                          "无痕剪裁，贴身穿着更平整",
+                          "速干透气，运动和通勤都适合",
+                          "抗皱免烫，日常打理省心"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/men-pfd260001.webp",
+                          "alt": "无痕短袖T恤",
+                          "width": 420,
+                          "height": 531
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "gender": "女装",
+                "slug": "women",
+                "categories": [
+                  {
+                    "name": "100%精纺羊毛系列",
+                    "slug": "fine-wool",
+                    "products": [
+                      {
+                        "name": "半高领羊毛衫 （16支）",
+                        "composition": "100%羊毛",
+                        "colors": [
+                          "白色",
+                          "彩粉红",
+                          "彩红",
+                          "彩米",
+                          "彩中灰",
+                          "纯黑",
+                          "纯灰",
+                          "黑色",
+                          "红色",
+                          "花咖驼",
+                          "灰色",
+                          "酒红",
+                          "米黄",
+                          "秋香绿",
+                          "驼色",
+                          "咸菜绿",
+                          "杏色",
+                          "中咖"
+                        ],
+                        "sellingPoints": [
+                          "平针织面细腻柔和，穿着轻盈",
+                          "半高领贴合颈部，修饰脸型",
+                          "微落肩剪裁，单穿内搭都自然"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sht125.webp",
+                          "alt": "半高领羊毛衫 （16支）",
+                          "width": 367,
+                          "height": 394
+                        }
+                      },
+                      {
+                        "name": "圆领羊毛衫 （16支）",
+                        "composition": "100%羊毛",
+                        "colors": [
+                          "白色",
+                          "彩粉红",
+                          "彩黑",
+                          "彩红",
+                          "彩中灰",
+                          "纯灰",
+                          "黑色",
+                          "红色",
+                          "花灰",
+                          "灰驼",
+                          "酒红",
+                          "咖色",
+                          "米黄",
+                          "米杏",
+                          "秋香绿",
+                          "驼色",
+                          "中灰",
+                          "中咖",
+                          "棕色"
+                        ],
+                        "sellingPoints": [
+                          "基础圆领柔和贴颈，不挑脸型",
+                          "微宽松落肩，包容不同身形",
+                          "基础款式，搭配空间大"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sht126.webp",
+                          "alt": "圆领羊毛衫 （16支）",
+                          "width": 1050,
+                          "height": 1400
+                        }
+                      },
+                      {
+                        "name": "高领羊毛衫 （26支）",
+                        "composition": "100%羊毛",
+                        "colors": [
+                          "暗红",
+                          "白色",
+                          "纯灰",
+                          "粉红",
+                          "粉色",
+                          "黑色",
+                          "红色",
+                          "湖兰",
+                          "黄色",
+                          "咖色",
+                          "孔雀蓝",
+                          "米驼",
+                          "驼色",
+                          "中灰",
+                          "棕色"
+                        ],
+                        "sellingPoints": [
+                          "竖向坑条罗纹拉长身形",
+                          "堆堆高领柔和包覆颈部",
+                          "薄款肌理，层搭不厚重"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sht121.webp",
+                          "alt": "高领羊毛衫 （26支）",
+                          "width": 1400,
+                          "height": 1400
+                        }
+                      },
+                      {
+                        "name": "半高领羊毛衫 （26支）",
+                        "composition": "100%羊毛",
+                        "colors": [
+                          "白色",
+                          "纯灰",
+                          "豆沙紫",
+                          "粉红",
+                          "粉色",
+                          "风信紫",
+                          "果绿",
+                          "黑色",
+                          "红色",
+                          "湖兰",
+                          "花驼",
+                          "黄色",
+                          "灰蓝色",
+                          "惊艳紫",
+                          "桔红",
+                          "孔雀绿",
+                          "罗兰紫",
+                          "梦幻金",
+                          "米杏",
+                          "蜜桃粉",
+                          "苹果绿",
+                          "上青",
+                          "神茶绿",
+                          "天蓝",
+                          "驼色",
+                          "新芽绿",
+                          "棕色"
+                        ],
+                        "sellingPoints": [
+                          "竖向坑条罗纹带来弹力和显瘦感",
+                          "半高领利落贴合，修饰颈部线条",
+                          "薄款高密针织，轻盈不透"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sht120.webp",
+                          "alt": "半高领羊毛衫 （26支）",
+                          "width": 1050,
+                          "height": 1400
+                        }
+                      },
+                      {
+                        "name": "圆领羊毛衫（42支）",
+                        "composition": "100%羊毛",
+                        "colors": [
+                          "白色",
+                          "粉色",
+                          "黑色",
+                          "红色",
+                          "绿色",
+                          "天兰",
+                          "驼色",
+                          "杏色",
+                          "紫色"
+                        ],
+                        "sellingPoints": [
+                          "细密微菱肌理，基础款不单调",
+                          "圆领贴合锁骨，温柔修饰颈部",
+                          "薄款针织弹力适中，层搭不臃肿"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-yc25529.webp",
+                          "alt": "圆领羊毛衫（42支）",
+                          "width": 420,
+                          "height": 531
+                        }
+                      },
+                      {
+                        "name": "半高领羊毛衫（42支）",
+                        "composition": "100%羊毛",
+                        "colors": [
+                          "白色",
+                          "淡黄",
+                          "粉红",
+                          "黑色",
+                          "红色",
+                          "灰色",
+                          "绿色",
+                          "天蓝",
+                          "杏色",
+                          "紫色"
+                        ],
+                        "sellingPoints": [
+                          "细腻暗纹肌理弱化臃肿感",
+                          "半高立领包覆颈部，干净利落",
+                          "修身剪裁，适合搭配半裙或长裤"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-22526.webp",
+                          "alt": "半高领羊毛衫（42支）",
+                          "width": 420,
+                          "height": 531
+                        }
+                      },
+                      {
+                        "name": "高领羊毛衫（42支）",
+                        "composition": "100%羊毛",
+                        "colors": [
+                          "白色",
+                          "粉色",
+                          "黑色",
+                          "红色",
+                          "绿色",
+                          "天兰",
+                          "驼色",
+                          "杏色",
+                          "紫色"
+                        ],
+                        "sellingPoints": [
+                          "微菱肌理细腻，视觉更轻盈",
+                          "堆堆高领自然环绕颈部",
+                          "薄款基础版型，叠穿大衣不臃肿"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-yc25528.webp",
+                          "alt": "高领羊毛衫（42支）",
+                          "width": 420,
+                          "height": 531
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "丝羊绒混纺系列",
+                    "slug": "silk-cashmere-blend",
+                    "products": [
+                      {
+                        "name": "半高领针织衫 （丝羊绒）",
+                        "composition": "47.7%腈纶 25.5%锦纶 20.1%聚酯纤维\n2.6%山羊绒 2.2%桑蚕丝 1.9%绵羊毛",
+                        "colors": [
+                          "白色",
+                          "大红",
+                          "粉色",
+                          "黑色",
+                          "黄色",
+                          "灰色",
+                          "咖色",
+                          "绿色",
+                          "天蓝",
+                          "驼色"
+                        ],
+                        "sellingPoints": [
+                          "细密竖向罗纹，自带弹力",
+                          "半高领简洁气质，贴合颈部",
+                          "薄款高密针织，轻盈不透"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-shycn66.webp",
+                          "alt": "半高领针织衫 （丝羊绒）",
+                          "width": 933,
+                          "height": 1400
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "羊毛混纺针织系列",
+                    "slug": "wool-blend-knit",
+                    "products": [
+                      {
+                        "name": "拼色针织衫",
+                        "composition": "面料1：47.0%聚酯纤维 30.3%绵羊毛 22.7%腈纶(罗纹除外)\n面料2：46.5%聚酯纤维 28.3%绵羊毛 25.2%腈纶(罗纹除外)",
+                        "colors": [
+                          "白+新翠绿",
+                          "冰炫蓝",
+                          "纯灰",
+                          "黑色+白色",
+                          "黄橙",
+                          "金秋橙",
+                          "卡其",
+                          "克莱因蓝",
+                          "奈香咖",
+                          "珀玫紫",
+                          "浅灰",
+                          "青江绿",
+                          "清新黄",
+                          "深棕",
+                          "水纯灰",
+                          "水灰青",
+                          "丝滑粉",
+                          "仙罗黄",
+                          "仙桃粉",
+                          "新翠绿",
+                          "新花灰驼+白",
+                          "星空米",
+                          "雪亮白+金秋橙"
+                        ],
+                        "sellingPoints": [
+                          "拼色设计提高辨识度，单穿更有层次",
+                          "中袖剪裁修饰手臂线条",
+                          "耐穿易打理，适合春夏外穿和春秋内搭"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sh2836.webp",
+                          "alt": "拼色针织衫",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "蜂窝状针织衫",
+                        "composition": "51.1%聚酯纤维 24.1%腈纶 20.3%锦纶 4.5%绵羊毛",
+                        "colors": [
+                          "白色",
+                          "冰炫蓝",
+                          "冰雪粉",
+                          "纯灰",
+                          "翠亮绿",
+                          "豆布蓝",
+                          "豆菜绿",
+                          "豆柠绿",
+                          "豆纤黄",
+                          "果星绿",
+                          "黑色",
+                          "红色",
+                          "火龙果",
+                          "惊艳紫",
+                          "靓鱼灰",
+                          "克莱因蓝",
+                          "孔绿",
+                          "孔雀绿",
+                          "亮橙",
+                          "亮金黄",
+                          "路衣绿",
+                          "玫红",
+                          "梦幻金",
+                          "奈香咖",
+                          "暖粉驼",
+                          "浅乳黄",
+                          "睡莲紫",
+                          "天空灰蓝",
+                          "香橙",
+                          "新翠绿",
+                          "新卡其",
+                          "新芽绿",
+                          "星空米",
+                          "鲜蒙绿",
+                          "中咖"
+                        ],
+                        "sellingPoints": [
+                          "蜂窝肌理立体，基础款更有纹理感",
+                          "圆领版型好搭，适合日常单穿",
+                          "柔软蓬松，穿着不贴身"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sh2883.webp",
+                          "alt": "蜂窝状针织衫",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "针织开衫（荷叶边设计）",
+                        "composition": "38.0%聚酯纤维 37.4%腈纶 20.4%锦纶 4.2%绵羊毛",
+                        "colors": [
+                          "白色",
+                          "纯灰",
+                          "大红",
+                          "豆布蓝",
+                          "豆菜绿",
+                          "豆柠绿",
+                          "豆纤黄",
+                          "果星绿",
+                          "黑色",
+                          "欢喜绿",
+                          "卡其",
+                          "孔绿",
+                          "亮橙",
+                          "亮绿",
+                          "枚红",
+                          "梦幻金",
+                          "米色",
+                          "奈香咖",
+                          "暖驼粉",
+                          "青果绿",
+                          "乳浅黄",
+                          "睡莲紫",
+                          "天空蓝",
+                          "香橙"
+                        ],
+                        "sellingPoints": [
+                          "荷叶边门襟柔和，增加女性化细节",
+                          "开衫结构方便叠穿，早晚温差好穿脱",
+                          "袖口罗纹回弹好，久穿不易松垮"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sh2882.webp",
+                          "alt": "针织开衫（荷叶边设计）",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "半高领针织衫",
+                        "composition": "53.5%聚酯纤维\n21.5%腈纶\n20.4%锦纶\n4.6%绵羊毛",
+                        "colors": [
+                          "百合橙",
+                          "冰炫蓝",
+                          "藏青",
+                          "菖蒲紫",
+                          "纯灰",
+                          "翠亮绿",
+                          "大红",
+                          "豆柠绿",
+                          "豆纤黄",
+                          "瓜肉色",
+                          "果星绿",
+                          "欢喜绿",
+                          "黄金绿",
+                          "克莱因蓝",
+                          "孔蓝",
+                          "亮黄",
+                          "玫红",
+                          "米色",
+                          "奈香咖",
+                          "暖粉",
+                          "青果绿",
+                          "深灰",
+                          "水纯灰",
+                          "松石绿",
+                          "香橙",
+                          "新禾青",
+                          "新卡其",
+                          "新钱绿",
+                          "新芽绿",
+                          "银灰",
+                          "水灰青",
+                          "中咖"
+                        ],
+                        "sellingPoints": [
+                          "半高领包覆颈部，利落不压脖",
+                          "高密织面平整，内搭外穿都清爽",
+                          "弹力适中，日常活动不束缚"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sh2838.webp",
+                          "alt": "半高领针织衫",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "高领针织衫",
+                        "composition": "39.8%聚酯纤维 36.2%腈纶 20.9%锦纶 3.1%绵羊毛",
+                        "colors": [
+                          "白色",
+                          "百合橙",
+                          "冰炫蓝",
+                          "彩蓝",
+                          "菖蒲紫",
+                          "纯灰",
+                          "翠亮绿",
+                          "大红",
+                          "豆柠绿",
+                          "豆纤黄",
+                          "果星绿",
+                          "欢喜绿",
+                          "黄金绿",
+                          "灰驼",
+                          "金棕咖",
+                          "孔雀蓝",
+                          "孔雀绿",
+                          "枚红",
+                          "奈香咖",
+                          "暖粉驼",
+                          "青果绿",
+                          "水纯灰",
+                          "水青灰",
+                          "松石绿",
+                          "香橙",
+                          "新禾青",
+                          "新卡其",
+                          "新芽绿",
+                          "星空米",
+                          "银灰"
+                        ],
+                        "sellingPoints": [
+                          "高领包覆颈部，秋冬内搭更保暖",
+                          "高密织面平整，叠穿不臃肿",
+                          "弹力适中，穿着不紧绷"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sh2852.webp",
+                          "alt": "高领针织衫",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "Polo领针织衫",
+                        "composition": "39.9%聚酯纤维 37.0%腈纶 20.4%锦纶 2.7%绵羊毛",
+                        "colors": [
+                          "白色",
+                          "冰兰",
+                          "菖蒲紫",
+                          "翠亮绿",
+                          "豆棕绿",
+                          "古奈兰",
+                          "瓜肉色",
+                          "果星绿",
+                          "花李粉",
+                          "金秋橙",
+                          "惊艳紫",
+                          "卡其",
+                          "孔绿",
+                          "孔雀蓝",
+                          "亮黄",
+                          "浅草绿",
+                          "水灰青",
+                          "香橙",
+                          "香瑾紫",
+                          "新丰绿",
+                          "新芽绿",
+                          "艳玫",
+                          "中咖"
+                        ],
+                        "sellingPoints": [
+                          "Polo 领型提升精神感，适合通勤",
+                          "翻领针织版型清爽，单穿有型",
+                          "织面柔软蓬松，久穿不易松垮"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sh2835.webp",
+                          "alt": "Polo领针织衫",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      },
+                      {
+                        "name": "圆领针织衫",
+                        "composition": "39.0%聚酯纤维\n37.6%腈纶\n20.5% 锦纶\n2.9%绵羊毛",
+                        "colors": [
+                          "冰炫兰",
+                          "菖蒲紫",
+                          "翠亮绿",
+                          "豆柠绿",
+                          "帆船蓝",
+                          "瓜肉色",
+                          "果星绿",
+                          "惊艳紫",
+                          "孔雀蓝",
+                          "孔雀绿",
+                          "亮橙",
+                          "亮金黄",
+                          "玫红",
+                          "暖粉",
+                          "暖粉驼",
+                          "浅草绿",
+                          "青果绿",
+                          "山雪粉",
+                          "深玫红",
+                          "水灰青",
+                          "松茸绿",
+                          "香橙",
+                          "香瑾紫",
+                          "新翠绿",
+                          "新芽绿",
+                          "中咖"
+                        ],
+                        "sellingPoints": [
+                          "圆领基础版型，日常搭配友好",
+                          "织面柔软蓬松，贴身穿着舒适",
+                          "弹力适中，单穿内搭都自然"
+                        ],
+                        "image": {
+                          "src": "/images/pufeng/products/women-pf-sh2837.webp",
+                          "alt": "圆领针织衫",
+                          "width": 1200,
+                          "height": 1200
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "summary": {
+              "totalProducts": 36,
+              "visibleProducts": 27,
+              "missingImageProducts": 9
+            }
+          },
+          "media": []
+        }
+      ],
+      "freshness": "fact_change"
+    },
+    {
+      "id": "faq",
+      "route": "/faq",
+      "page_type": "faq",
+      "title": "常见问题 — 濮丰服饰",
+      "meta_description": "关于濮丰服饰的常见问题与解答",
+      "canonical_url": "https://pufengwool.com/faq",
+      "header": null,
+      "schema_jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "你们起订量是多少？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "我们约 100 件起订，具体视款式复杂度和面料而定。如果首批合作顺利，后续翻单起订量可以再沟通。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "可以打样吗？打样周期多久？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "可以。确认款式和面料后，打样周期一般 7-10 个工作日，具体看款式的工艺复杂度。打样费用视款式而定，大货下单后会退还或抵扣。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "从下单到出货要多久？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "大货生产周期通常 15-30 个工作日，实际取决于款式、数量和当前产线排期。下单前我们会给出明确的交期预估。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "你们能出质检报告吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "能。我们自有质检流程，出货前会进行成品检验并提供质检报告。如需第三方检测机构的报告，我们也可以配合送检。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "能签合同、开增值税发票吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "能。我们是正规注册的生产企业，可以签正式加工合同并开具增值税专用发票。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "外贸出口需要合规文件和凭证，你们能提供吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "能。我们长期服务外贸客户，可以提供正规订单合同、装箱单、产地证明等出口所需的文件凭证，配合海外客户和平台的合规审核。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "怎么了解价格？大概什么价位？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "价格和款式、面料、工艺、数量都有关，没法一口给。建议先发款式图或样品，我们评估工艺和用料后出估价单。1688 上也有部分常规款式的参考，可以联系我们获取店铺链接。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "你们做什么面料？只用羊毛吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不只用羊毛。我们覆盖羊毛、羊绒、棉、麻、化纤混纺等多种针织面料，具体看您的款式需求。中高档羊毛衫和高档针织是我们的核心品线。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "你们也卖原材料吗？面料和毛纱单独卖吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "卖的。我们自有纺纱和面料产线，面料和毛纱都对外销售。面料年对外销售约 700 吨，从源头可追溯。"
+              }
+            }
+          ]
+        }
+      ],
+      "modules": [
+        {
+          "module_type": "FAQGroup",
+          "component": "FAQGroup",
+          "props": {
+            "groups": [
+              {
+                "label": "常见问题",
+                "faqs": [
+                  {
+                    "question": "你们起订量是多少？",
+                    "answer": "我们约 100 件起订，具体视款式复杂度和面料而定。如果首批合作顺利，后续翻单起订量可以再沟通。"
+                  },
+                  {
+                    "question": "可以打样吗？打样周期多久？",
+                    "answer": "可以。确认款式和面料后，打样周期一般 7-10 个工作日，具体看款式的工艺复杂度。打样费用视款式而定，大货下单后会退还或抵扣。"
+                  },
+                  {
+                    "question": "从下单到出货要多久？",
+                    "answer": "大货生产周期通常 15-30 个工作日，实际取决于款式、数量和当前产线排期。下单前我们会给出明确的交期预估。"
+                  },
+                  {
+                    "question": "你们能出质检报告吗？",
+                    "answer": "能。我们自有质检流程，出货前会进行成品检验并提供质检报告。如需第三方检测机构的报告，我们也可以配合送检。"
+                  },
+                  {
+                    "question": "能签合同、开增值税发票吗？",
+                    "answer": "能。我们是正规注册的生产企业，可以签正式加工合同并开具增值税专用发票。"
+                  },
+                  {
+                    "question": "外贸出口需要合规文件和凭证，你们能提供吗？",
+                    "answer": "能。我们长期服务外贸客户，可以提供正规订单合同、装箱单、产地证明等出口所需的文件凭证，配合海外客户和平台的合规审核。"
+                  },
+                  {
+                    "question": "怎么了解价格？大概什么价位？",
+                    "answer": "价格和款式、面料、工艺、数量都有关，没法一口给。建议先发款式图或样品，我们评估工艺和用料后出估价单。1688 上也有部分常规款式的参考，可以联系我们获取店铺链接。"
+                  },
+                  {
+                    "question": "你们做什么面料？只用羊毛吗？",
+                    "answer": "不只用羊毛。我们覆盖羊毛、羊绒、棉、麻、化纤混纺等多种针织面料，具体看您的款式需求。中高档羊毛衫和高档针织是我们的核心品线。"
+                  },
+                  {
+                    "question": "你们也卖原材料吗？面料和毛纱单独卖吗？",
+                    "answer": "卖的。我们自有纺纱和面料产线，面料和毛纱都对外销售。面料年对外销售约 700 吨，从源头可追溯。"
+                  }
+                ]
+              }
+            ]
+          },
+          "media": []
+        }
+      ],
+      "freshness": "fact_change"
+    },
+    {
+      "id": "about",
+      "route": "/about",
+      "page_type": "about",
+      "title": "关于濮丰服饰",
+      "meta_description": "位于“中国羊毛衫名镇”濮院、给多家一二线服装品牌做过代工的正规针织服装厂，主营中高档羊毛衫/针织衫，并提供约100件起订的小批量定制工装与外贸服装代工。",
+      "canonical_url": "https://pufengwool.com/about",
+      "header": null,
+      "schema_jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "name": "关于濮丰服饰",
+          "url": "https://pufengwool.com/about",
+          "about": {
+            "@type": "Organization",
+            "name": "桐乡市濮丰服饰股份有限公司"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "桐乡市濮丰服饰股份有限公司",
+          "url": "https://pufengwool.com",
+          "description": "位于“中国羊毛衫名镇”濮院、给多家一二线服装品牌做过代工的正规针织服装厂，主营中高档羊毛衫/针织衫，并提供约100件起订的小批量定制工装与外贸服装代工。",
+          "alternateName": [
+            "濮丰服饰",
+            "濮丰",
+            "桐乡濮丰",
+            "pufeng"
+          ],
+          "foundingDate": "2013",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "浙江省桐乡市濮院镇",
+            "addressCountry": "CN"
+          }
+        }
+      ],
+      "modules": [
+        {
+          "module_type": "CompanyProfile",
+          "component": "CompanyProfile",
+          "props": {
+            "companyName": "濮丰服饰",
+            "fullName": "桐乡市濮丰服饰股份有限公司",
+            "region": "浙江省桐乡市濮院镇",
+            "foundedYear": 2013,
+            "intro": [
+              "濮丰的故事，从一次对濮院市场的判断开始。2003年，创始团队从山东威海服装贸易一线来到濮院，正赶上濮院毛衫交易市场成立15周年。这里的原料、工厂、人才与交易网络高度聚集，也让团队决定把事业扎根在这座毛衫名镇。",
+              "2005年，濮丰加工厂成立，从毛衫加工起步，在一线订单里打磨工艺、交期与质量管理。2013年，桐乡市濮丰服饰股份有限公司成立，业务延伸到纺织服装、服饰的研发、生产与销售。",
+              "随着企业发展，濮丰持续向产业链前后端延伸，围绕羊毛采购、纱线处理、成衣研发、生产和销售整合资源，也与濮院产业集群里的伙伴协同合作，让原料、产能与渠道形成更稳定的供给能力。",
+              "今天，濮丰一方面继续服务针织服装订单和成品采购，另一方面推进自主品牌、平台渠道与直播电商合作。2026年，松潘基地与桐乡基地两个项目启动，公司继续围绕针织服装做长期投入。"
+            ],
+            "story": {
+              "eyebrow": "品牌故事",
+              "heading": "从濮院一根纱开始，把毛衫做成长期事业",
+              "paragraphs": [
+                "濮丰的故事，从一次对濮院市场的判断开始。2003年，创始团队从山东威海服装贸易一线来到濮院，正赶上濮院毛衫交易市场成立15周年。这里的原料、工厂、人才与交易网络高度聚集，也让团队决定把事业扎根在这座毛衫名镇。",
+                "2005年，濮丰加工厂成立，从毛衫加工起步，在一线订单里打磨工艺、交期与质量管理。2013年，桐乡市濮丰服饰股份有限公司成立，业务延伸到纺织服装、服饰的研发、生产与销售。",
+                "随着企业发展，濮丰持续向产业链前后端延伸，围绕羊毛采购、纱线处理、成衣研发、生产和销售整合资源，也与濮院产业集群里的伙伴协同合作，让原料、产能与渠道形成更稳定的供给能力。",
+                "今天，濮丰一方面继续服务针织服装订单和成品采购，另一方面推进自主品牌、平台渠道与直播电商合作。2026年，松潘基地与桐乡基地两个项目启动，公司继续围绕针织服装做长期投入。"
+              ],
+              "milestones": [
+                {
+                  "year": "2003",
+                  "title": "来到濮院",
+                  "body": "从山东威海服装贸易一线来到濮院，看见毛衫产业带的资源集中度与增长机会。"
+                },
+                {
+                  "year": "2005",
+                  "title": "加工厂起步",
+                  "body": "濮丰加工厂成立，从毛衫加工切入，把工艺、交期和质量管理沉淀在日常订单里。"
+                },
+                {
+                  "year": "2013",
+                  "title": "股份公司成立",
+                  "body": "桐乡市濮丰服饰股份有限公司成立，业务覆盖纺织服装、服饰研发、生产与销售。"
+                },
+                {
+                  "year": "2026",
+                  "title": "继续深耕针织服装",
+                  "body": "松潘基地与桐乡基地两个项目启动，围绕针织服装产业链做更长期的产能与品牌投入。"
+                }
+              ]
+            },
+            "honors": {
+              "eyebrow": "资质与荣誉",
+              "heading": "资质认证与品牌沉淀",
+              "lead": "从高新技术企业认定，到质量、环境、职业健康安全管理体系认证，再到自有商标注册，濮丰持续把研发、生产和管理能力沉淀为可查验的长期资质。",
+              "items": [
+                {
+                  "title": "高新技术企业证书",
+                  "note": "2024年认定，证书编号GR202433001447。",
+                  "image": "/images/pufeng/honors/high-tech-enterprise.jpg",
+                  "alt": "桐乡市濮丰服饰股份有限公司高新技术企业证书",
+                  "width": 1400,
+                  "height": 980
+                },
+                {
+                  "title": "质量管理体系认证",
+                  "note": "覆盖针织羊毛衫与针织双面呢大衣生产。",
+                  "image": "/images/pufeng/honors/quality-management.jpg",
+                  "alt": "桐乡市濮丰服饰股份有限公司质量管理体系认证证书",
+                  "width": 1059,
+                  "height": 1500
+                },
+                {
+                  "title": "环境管理体系认证",
+                  "note": "围绕针织服装生产相关环境管理活动。",
+                  "image": "/images/pufeng/honors/environmental-management.jpg",
+                  "alt": "桐乡市濮丰服饰股份有限公司环境管理体系认证证书",
+                  "width": 1059,
+                  "height": 1500
+                },
+                {
+                  "title": "职业健康安全管理体系认证",
+                  "note": "生产管理中的职业健康与安全体系背书。",
+                  "image": "/images/pufeng/honors/occupational-health-safety.jpg",
+                  "alt": "桐乡市濮丰服饰股份有限公司职业健康安全管理体系认证证书",
+                  "width": 1059,
+                  "height": 1500
+                },
+                {
+                  "title": "海马生活商标注册证",
+                  "note": "自主品牌与线上渠道建设的品牌资产。",
+                  "image": "/images/pufeng/honors/trademark-registration.jpg",
+                  "alt": "桐乡市濮丰服饰有限公司海马生活商标注册证",
+                  "width": 979,
+                  "height": 1400
+                },
+                {
+                  "title": "设计人才与产学合作背书",
+                  "note": "围绕时尚设计与产业协同的补充证明。",
+                  "image": "/images/pufeng/honors/design-appointment.jpg",
+                  "alt": "武汉设计工程学院时尚设计学院产业教授聘书",
+                  "width": 1049,
+                  "height": 1400
+                }
+              ]
+            }
+          },
+          "media": []
+        }
+      ],
+      "freshness": "fact_change"
+    }
+  ],
+  "gaps": []
+}

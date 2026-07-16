@@ -1,0 +1,108 @@
+---
+import { loadSiteContent, type SiteContent } from "@/lib/site";
+
+interface Props {
+  currentPath?: string;
+  site?: SiteContent;
+}
+
+const { currentPath = "/", site = loadSiteContent() } = Astro.props as Props;
+const isHome = currentPath === "/";
+const brand = site.global.navigation.brand;
+const navItems = site.global.navigation.items;
+const cta = site.global.navigation.cta ?? { label: "联系我们", href: "/#contact" };
+const headerMode = site.global.header?.mode ?? "overlay";
+const headerVisual = site.global.header?.visual ?? "default";
+const overlayHome = isHome && headerMode !== "solid";
+
+const isActive = (href = "") => {
+  if (href === "/") return currentPath === "/";
+  return currentPath.startsWith(href);
+};
+---
+
+<header
+  id="header"
+  data-aw-sticky-header
+  data-solid-header={overlayHome ? undefined : "true"}
+  class:list={[
+    "sticky top-0 z-40 w-full border-b border-transparent transition-[background-color,backdrop-filter,box-shadow] duration-300",
+    { scroll: !overlayHome },
+  ]}
+>
+  {/* 移动端菜单开关(checkbox hack,零 JS) */}
+  <input type="checkbox" id="nav-toggle" class="peer sr-only" />
+
+  <div class="relative mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 md:grid md:grid-cols-3">
+    <a
+      class:list={[
+        "flex items-center text-xl font-bold tracking-tight",
+        headerVisual === "wanwang" ? "text-primary" : "text-default",
+      ]}
+      href="/"
+      aria-label={`${brand} 首页`}
+    >
+      {brand}
+    </a>
+
+    <nav class="hidden justify-self-center md:flex" aria-label="主导航">
+      <ul class="flex items-center gap-1 text-[0.9375rem] font-medium">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.route}
+                class:list={[
+                  "rounded-full px-4 py-2 transition hover:bg-gray-100 hover:text-primary",
+                  isActive(item.route) ? "text-primary" : "text-muted",
+                ]}
+                aria-current={isActive(item.route) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="hidden justify-self-end md:block">
+      <a class:list={["btn-primary px-5 py-2.5 text-sm", headerVisual === "wanwang" ? "rounded-md" : ""]} href={cta.href}>{cta.label}</a>
+    </div>
+
+    {/* 汉堡按钮(仅移动端) */}
+    <label
+      for="nav-toggle"
+      class="-mr-2 inline-flex cursor-pointer items-center justify-center rounded-lg p-2 text-default md:hidden"
+      aria-label="打开菜单"
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </label>
+  </div>
+
+  {/* 移动端下拉面板:勾选后展开 */}
+  <div class="hidden border-t border-slate-200 bg-white peer-checked:block md:!hidden">
+    <nav class="mx-auto max-w-7xl px-4 py-3 sm:px-6" aria-label="移动端导航">
+      <ul class="flex flex-col gap-1 text-base font-medium">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.route}
+                class:list={[
+                  "block rounded-lg px-3 py-2.5 transition hover:bg-slate-100",
+                  isActive(item.route) ? "text-primary" : "text-default",
+                ]}
+                aria-current={isActive(item.route) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { loadSiteContent } from "@/lib/site";
+const brand = loadSiteContent().global.navigation.brand;
+---
+
+<BaseLayout title={`页面不存在 — ${brand}`} description="该页面不存在或已移动。" noindex={true} includeHeader={false} includeFooter={false}>
+  <main id="main-content" class="flex min-h-screen items-center justify-center bg-base px-4">
+    <div class="max-w-md text-center">
+      <h1 class="font-serif text-7xl">404</h1>
+      <h2 class="mt-4 font-serif text-2xl">页面不存在</h2>
+      <p class="mt-2 text-sm text-faded">该页面不存在或已移动。</p>
+      <div class="mt-6">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-xs uppercase tracking-widest text-[var(--color-base)] transition-colors hover:bg-accent"
+        >
+          返回首页
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

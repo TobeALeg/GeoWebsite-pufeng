@@ -1,0 +1,50 @@
+---
+/**
+ * 数据驱动内容页。
+ * 所有页面都由本仓库的 src/data/site-content.json 声明。
+ * page.header 是页面壳元数据,不是 moduleMap 模块。
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import { componentMap } from "@/components/moduleMap";
+import { loadSiteContent, type RenderedPage } from "@/lib/site";
+
+export function getStaticPaths() {
+  return loadSiteContent().pages.map((page) => ({
+    params: { slug: page.route.replace(/^\/+|\/+$/g, "") || undefined },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props as { page: RenderedPage };
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.meta_description}
+  canonical={page.canonical_url}
+  jsonld={page.schema_jsonld}
+>
+  <main id="main-content">
+    {
+      page.header && (
+        <PageHeader
+          eyebrow={page.header.eyebrow}
+          title={page.header.title}
+          subtitle={page.header.subtitle}
+          image={page.header.image}
+          visual={page.header.visual}
+        />
+      )
+    }
+    {
+      page.modules.map((m) => {
+        const Component = componentMap[m.component] as any;
+        if (!Component) {
+          throw new Error(`未注册组件: ${m.component}(在 moduleMap.ts 登记)`);
+        }
+        return <Component {...m.props} media={m.media} />;
+      })
+    }
+  </main>
+</BaseLayout>
