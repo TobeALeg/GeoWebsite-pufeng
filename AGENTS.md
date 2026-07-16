@@ -5,3 +5,4 @@
 - 页面或素材删除前，检查全部路由和引用；不要在迁移维护中顺手重设计现有页面。
 - 持续维护 `docs/product.md` 与 `docs/architecture.md`。
 - 敏感信息只放 GitHub Environment Secrets，不得写入代码或提交。
+- 功能分支 Push 成功后，继续创建合并到 `main` 的 Pull Request，不要停在只提供 PR 创建链接。
