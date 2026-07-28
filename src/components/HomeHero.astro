@@ -135,7 +135,13 @@ const isCarousel = heroSlides.length > 1;
               </p>
             )}
             <div class="mt-9 flex justify-center">
-              <a class="btn-primary rounded-lg px-9 py-4 text-base" href={slide.cta?.url ?? "#contact"}>
+              <a
+                class="btn-primary rounded-lg px-9 py-4 text-base"
+                href={slide.cta?.url ?? "#contact"}
+                data-umami-event="contact_intent"
+                data-umami-event-method="contact_section"
+                data-umami-event-placement="hero"
+              >
                 {slide.cta?.label ?? "联系我们"}
               </a>
             </div>
@@ -247,11 +253,18 @@ const isCarousel = heroSlides.length > 1;
       <div class="mt-10 flex max-w-md flex-col gap-4 sm:flex-row">
         <a
           class="btn-primary w-full border-white bg-white text-slate-950 hover:border-white/85 hover:bg-white/85 hover:text-slate-950 sm:w-auto"
-          href={cta?.url ?? "#contact"}>{cta?.label ?? "联系我们"}</a
+          href={cta?.url ?? "#contact"}
+          data-umami-event="contact_intent"
+          data-umami-event-method="contact_section"
+          data-umami-event-placement="hero">{cta?.label ?? "联系我们"}</a
         >
         <a
           class="btn-secondary w-full border-white/45 bg-white/10 text-white hover:border-white hover:bg-white hover:text-slate-950 sm:w-auto"
-          href={secondaryCta.url}>{secondaryCta.label}</a
+          href={secondaryCta.url}
+          data-umami-event="select_content"
+          data-umami-event-content-type="navigation"
+          data-umami-event-content-id={secondaryCta.url}
+          data-umami-event-placement="hero">{secondaryCta.label}</a
         >
       </div>
     </div>

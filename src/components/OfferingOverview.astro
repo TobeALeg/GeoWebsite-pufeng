@@ -30,6 +30,10 @@ const gridCols =
           <Tag
             href={o.href}
             data-reveal
+            data-umami-event={isLinked ? "select_content" : undefined}
+            data-umami-event-content-type={isLinked ? "offering" : undefined}
+            data-umami-event-content-id={isLinked ? o.href : undefined}
+            data-umami-event-placement={isLinked ? "offering_overview" : undefined}
             style={`--reveal-delay:${(i % 4) * 90}ms`}
             class:list={[
               "group relative isolate block overflow-hidden rounded-xl bg-slate-950 text-white",

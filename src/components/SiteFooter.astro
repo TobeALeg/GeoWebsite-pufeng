@@ -77,7 +77,13 @@ const bottomNote = footer.bottom_note ?? footer.one_line_definition;
                 <Icon name="tabler:phone" class="mt-0.5 h-5 w-5 flex-none text-white/40" />
                 <span class="leading-6">
                   手机 / 微信
-                  <a class="mt-0.5 block font-semibold text-white transition hover:text-emerald-300" href={telHref}>
+                  <a
+                    class="mt-0.5 block font-semibold text-white transition hover:text-emerald-300"
+                    href={telHref}
+                    data-umami-event="contact_intent"
+                    data-umami-event-method="phone"
+                    data-umami-event-placement="footer"
+                  >
                     {footer.phone}
                   </a>
                 </span>
@@ -90,7 +96,13 @@ const bottomNote = footer.bottom_note ?? footer.one_line_definition;
                 <Icon name="tabler:mail" class="mt-0.5 h-5 w-5 flex-none text-white/40" />
                 <span class="leading-6">
                   邮箱
-                  <a class="mt-0.5 block font-semibold text-white transition hover:text-emerald-300" href={`mailto:${footer.email}`}>
+                  <a
+                    class="mt-0.5 block font-semibold text-white transition hover:text-emerald-300"
+                    href={`mailto:${footer.email}`}
+                    data-umami-event="contact_intent"
+                    data-umami-event-method="email"
+                    data-umami-event-placement="footer"
+                  >
                     {footer.email}
                   </a>
                 </span>
