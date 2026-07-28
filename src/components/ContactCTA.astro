@@ -20,8 +20,10 @@ const contactMethod = (href = "") =>
     : href.startsWith("mailto:")
       ? "email"
       : href.includes("#contact")
-        ? "contact_section"
-        : "external";
+      ? "contact_section"
+      : "external";
+const ctaMethod = contactMethod(cta?.url);
+const ctaIsContact = ctaMethod !== "external";
 ---
 
 <section id="contact" class="scroll-mt-20 bg-primary text-white">
@@ -37,8 +39,10 @@ const contactMethod = (href = "") =>
             <a
               href={cta.url}
               class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-bold text-primary transition hover:bg-white/90"
-              data-umami-event="contact_intent"
-              data-umami-event-method={contactMethod(cta.url)}
+              data-umami-event={ctaIsContact ? "contact_intent" : "select_content"}
+              data-umami-event-method={ctaIsContact ? ctaMethod : undefined}
+              data-umami-event-content-type={ctaIsContact ? undefined : "navigation"}
+              data-umami-event-content-id={ctaIsContact ? undefined : cta.url}
               data-umami-event-placement="contact_section"
             >
               {cta.label}
