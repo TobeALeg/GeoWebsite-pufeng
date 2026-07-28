@@ -31,6 +31,8 @@ production Environment Variables
 - `PUBLIC_UMAMI_DOMAINS` 限制采集正式域名，默认值为 `pufengwool.com,www.pufengwool.com`，避免本地和预览流量污染。
 - 第一版业务事件只有 `select_content` 与 `contact_intent`。事件参数只描述内容类型、内容标识、入口位置和联系方式，不采集姓名、电话、邮箱或表单原始值。
 - `contact_intent` 代表用户点击咨询入口，不代表真实询价。只有未来后端成功接收线索后，才允许记录 `lead_generated`。
+- Umami 作为旁路服务运行在现有生产服务器的 Docker Compose 中，PostgreSQL 数据保存在独立 Docker volume，只有 Umami 向本机 `127.0.0.1:3100` 暴露端口。
+- Nginx 通过 `analytics.pufengwool.com` 反向代理 Umami。服务端操作由 `Operate Umami` 工作流执行，复用 production Environment 的 SSH 凭据；管理员密码从 GitHub Environment Secret 注入，数据库密码和 `APP_SECRET` 只在服务器首次部署时生成，运行凭据不进入仓库。
 
 ## status flow
 

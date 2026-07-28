@@ -1,0 +1,69 @@
+name: Operate Umami
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Umami operation
+        required: true
+        default: inspect
+        type: choice
+        options:
+          - inspect
+          - deploy
+          - status
+          - enable-tls
+          - backup
+permissions:
+  contents: read
+
+concurrency:
+  group: pufeng-umami
+  cancel-in-progress: false
+
+jobs:
+  operate:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      UMAMI_ADMIN_PASSWORD: ${{ secrets.UMAMI_ADMIN_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SSH configuration
+        run: |
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}"
+          test -n "${{ secrets.DEPLOY_KNOWN_HOSTS }}"
+      - name: Configure SSH
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' '${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' '${{ secrets.DEPLOY_KNOWN_HOSTS }}' > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+      - name: Upload operation files
+        run: |
+          remote_dir="/tmp/pufeng-umami-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$remote_dir'"
+          scp -r ops/umami/. "$DEPLOY_USER@$DEPLOY_HOST:$remote_dir/"
+          if [ "${{ inputs.operation }}" = "deploy" ]; then
+            test -n "$UMAMI_ADMIN_PASSWORD"
+            umask 077
+            printf '%s' "$UMAMI_ADMIN_PASSWORD" > "$RUNNER_TEMP/umami-admin-password"
+            scp "$RUNNER_TEMP/umami-admin-password" "$DEPLOY_USER@$DEPLOY_HOST:$remote_dir/admin-password"
+          fi
+          echo "REMOTE_DIR=$remote_dir" >> "$GITHUB_ENV"
+      - name: Run operation
+        run: |
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" \
+            "sudo -n bash '$REMOTE_DIR/manage.sh' '${{ inputs.operation }}' '$REMOTE_DIR/admin-password'"
+      - name: Remove operation files
+        if: always()
+        run: |
+          if [ -n "${REMOTE_DIR:-}" ]; then
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" \
+              "rm -f '$REMOTE_DIR/docker-compose.yml' '$REMOTE_DIR/nginx.conf' '$REMOTE_DIR/bootstrap.py' '$REMOTE_DIR/manage.sh' '$REMOTE_DIR/admin-password'; rmdir '$REMOTE_DIR'"
+          fi
