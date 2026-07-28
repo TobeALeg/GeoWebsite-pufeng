@@ -79,6 +79,32 @@ if (fs.existsSync(schemaPath)) {
 if (fs.existsSync(path.join(dist, "gallery/index.html")))
   failures.push("正式构建不得包含 /gallery");
 
+const homePath = path.join(dist, "index.html");
+if (fs.existsSync(homePath)) {
+  const homeHtml = fs.readFileSync(homePath, "utf8");
+  const umamiConfigured =
+    Boolean(process.env.PUBLIC_UMAMI_SCRIPT_URL) || Boolean(process.env.PUBLIC_UMAMI_WEBSITE_ID);
+
+  if (umamiConfigured) {
+    if (!process.env.PUBLIC_UMAMI_SCRIPT_URL || !process.env.PUBLIC_UMAMI_WEBSITE_ID) {
+      failures.push(
+        "Umami 配置不完整: PUBLIC_UMAMI_SCRIPT_URL 与 PUBLIC_UMAMI_WEBSITE_ID 必须同时提供",
+      );
+    } else {
+      if (!homeHtml.includes(`src="${process.env.PUBLIC_UMAMI_SCRIPT_URL}"`))
+        failures.push("首页未输出配置的 Umami tracker script");
+      if (!homeHtml.includes(`data-website-id="${process.env.PUBLIC_UMAMI_WEBSITE_ID}"`))
+        failures.push("首页未输出配置的 Umami website id");
+      if (!homeHtml.includes('data-before-send="sanitizeUmamiPayload"'))
+        failures.push("首页未配置 Umami URL 参数清洗");
+      if (!homeHtml.includes('data-exclude-hash="true"'))
+        failures.push("首页未关闭 URL hash 采集");
+    }
+  } else if (homeHtml.includes("data-website-id=")) {
+    failures.push("未配置 Umami 时不应输出 tracker script");
+  }
+}
+
 if (failures.length) {
   console.error(failures.join("\n"));
   process.exit(1);

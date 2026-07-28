@@ -1,0 +1,74 @@
+name: Operate Umami
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Umami operation
+        required: true
+        default: inspect
+        type: choice
+        options:
+          - inspect
+          - deploy
+          - status
+          - enable-tls
+          - backup
+permissions:
+  contents: read
+
+concurrency:
+  group: pufeng-umami
+  cancel-in-progress: false
+
+jobs:
+  operate:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      UMAMI_ADMIN_PASSWORD: ${{ secrets.UMAMI_ADMIN_PASSWORD }}
+      DEPLOY_SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SSH configuration
+        run: |
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "$DEPLOY_SSH_PRIVATE_KEY"
+          test -n "$DEPLOY_KNOWN_HOSTS"
+      - name: Configure SSH
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+      - name: Prepare operation files
+        run: |
+          payload_dir="$RUNNER_TEMP/pufeng-umami-payload"
+          install -d -m 700 "$payload_dir"
+          cp ops/umami/docker-compose.yml ops/umami/nginx.conf ops/umami/bootstrap.py ops/umami/manage.sh "$payload_dir/"
+          if [ "${{ inputs.operation }}" = "deploy" ]; then
+            test -n "$UMAMI_ADMIN_PASSWORD"
+            umask 077
+            printf '%s' "$UMAMI_ADMIN_PASSWORD" > "$payload_dir/admin-password"
+          fi
+          remote_dir="/run/pufeng-umami-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "sudo -n install -d -o root -g root -m 700 '$remote_dir'"
+          tar -C "$payload_dir" -czf - . | \
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" "sudo -n tar --no-same-owner -xzf - -C '$remote_dir'"
+          echo "REMOTE_DIR=$remote_dir" >> "$GITHUB_ENV"
+      - name: Run operation
+        run: |
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" \
+            "sudo -n bash '$REMOTE_DIR/manage.sh' '${{ inputs.operation }}' '$REMOTE_DIR/admin-password'"
+      - name: Remove operation files
+        if: always()
+        run: |
+          if [ -n "${REMOTE_DIR:-}" ]; then
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" \
+              "sudo -n rm -f '$REMOTE_DIR/docker-compose.yml' '$REMOTE_DIR/nginx.conf' '$REMOTE_DIR/bootstrap.py' '$REMOTE_DIR/manage.sh' '$REMOTE_DIR/admin-password'; sudo -n rmdir '$REMOTE_DIR'"
+          fi

@@ -102,6 +102,10 @@ const colorPreview = (color: string) => {
                     <a
                       href={item.href}
                       class="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-default transition hover:border-primary/40 hover:text-primary"
+                      data-umami-event="select_content"
+                      data-umami-event-content-type="product_category"
+                      data-umami-event-content-id={item.href}
+                      data-umami-event-placement="product_catalog"
                     >
                       {item.name}
                     </a>
