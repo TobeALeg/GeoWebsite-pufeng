@@ -34,7 +34,7 @@ npm run verify
 自托管服务通过 GitHub Actions 的 `Operate Umami` 手动工作流维护：
 
 - `inspect`：只读检查 Docker、Nginx、Certbot、磁盘和端口。
-- `deploy`：创建或更新 Umami、PostgreSQL、Nginx HTTP 反向代理，并输出公开的 Website ID。
+- `deploy`：备份已有数据库，创建或更新 Umami 与 PostgreSQL；初始化管理员和站点成功后才启用 Nginx HTTP 反向代理，并输出公开的 Website ID。
 - `status`：检查容器、heartbeat 和站点配置。
 - `enable-tls`：DNS 生效后申请或更新 HTTPS。
 - `backup`：将 PostgreSQL 逻辑备份写入服务器 `/var/backups/pufeng-umami`。

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -66,6 +67,7 @@ def login(password: str) -> dict[str, object]:
 
 
 def main() -> None:
+    status_only = len(sys.argv) > 1 and sys.argv[1] == "status"
     wait_until_ready()
     secrets = read_env(INSTALL_ROOT / ".env")
     admin_password = secrets["UMAMI_ADMIN_PASSWORD"]
@@ -73,6 +75,8 @@ def main() -> None:
     try:
         session = login(admin_password)
     except urllib.error.HTTPError as error:
+        if status_only:
+            raise RuntimeError("Umami 管理员凭据验证失败") from error
         if error.code not in {400, 401, 403}:
             raise
         session = login("umami")
@@ -100,6 +104,8 @@ def main() -> None:
         None,
     )
     if website is None:
+        if status_only:
+            raise RuntimeError("Umami 中缺少 pufengwool.com 站点")
         website = request_json(
             "POST",
             "/api/websites",

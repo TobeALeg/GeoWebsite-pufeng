@@ -81,11 +81,29 @@ EOF
 install_nginx_vhost() {
   require_command nginx
   require_command systemctl
-  if [[ ! -f "$nginx_available" ]]; then
+  local stamp backup=""
+  stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+  if [[ -f "$nginx_available" ]]; then
+    backup="$backup_root/nginx-$stamp.conf"
+    cp -p "$nginx_available" "$backup"
+  fi
+  if [[ ! -f "$nginx_available" ]] || ! grep -q "managed by Certbot" "$nginx_available"; then
     install -m 644 "$source_root/nginx.conf" "$nginx_available"
   fi
+  if [[ -e "$nginx_enabled" && ! -L "$nginx_enabled" ]]; then
+    cp -p "$nginx_enabled" "$backup_root/nginx-enabled-$stamp.conf"
+    rm -f "$nginx_enabled"
+  fi
   ln -sfn "$nginx_available" "$nginx_enabled"
-  nginx -t
+  if ! nginx -t; then
+    if [[ -n "$backup" ]]; then
+      cp -p "$backup" "$nginx_available"
+    else
+      rm -f "$nginx_available" "$nginx_enabled"
+    fi
+    nginx -t
+    exit 1
+  fi
   systemctl reload nginx
 }
 
@@ -100,10 +118,13 @@ deploy_umami() {
   install -m 755 "$source_root/bootstrap.py" "$install_root/bootstrap.py"
   write_secrets_once
 
+  if docker compose --env-file "$env_file" -f "$compose_file" ps --services --status running | grep -qx db; then
+    backup_database
+  fi
   docker compose --env-file "$env_file" -f "$compose_file" pull
   docker compose --env-file "$env_file" -f "$compose_file" up -d
-  install_nginx_vhost
   python3 "$install_root/bootstrap.py"
+  install_nginx_vhost
   docker compose --env-file "$env_file" -f "$compose_file" ps
 }
 
@@ -116,7 +137,7 @@ show_status() {
   docker compose --env-file "$env_file" -f "$compose_file" ps
   curl --fail --silent --show-error http://127.0.0.1:3100/api/heartbeat
   echo
-  python3 "$install_root/bootstrap.py"
+  python3 "$install_root/bootstrap.py" status
 }
 
 enable_tls() {
@@ -125,6 +146,9 @@ enable_tls() {
     echo "Certbot 尚无已注册账户，不能自动申请证书" >&2
     exit 1
   fi
+  local stamp
+  stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+  cp -p "$nginx_available" "$backup_root/nginx-before-certbot-$stamp.conf"
   certbot --nginx \
     --domain analytics.pufengwool.com \
     --non-interactive \
@@ -136,11 +160,17 @@ backup_database() {
   require_command docker
   require_command gzip
   install -d -m 750 "$backup_root"
-  local stamp target
+  local stamp target temporary
   stamp="$(date -u +%Y%m%dT%H%M%SZ)"
   target="$backup_root/$stamp.sql.gz"
-  docker compose --env-file "$env_file" -f "$compose_file" exec -T db \
-    pg_dump -U umami -d umami | gzip -c >"$target"
+  temporary="$(mktemp "$backup_root/.${stamp}.XXXXXX.sql.gz")"
+  if ! docker compose --env-file "$env_file" -f "$compose_file" exec -T db \
+    pg_dump -U umami -d umami | gzip -c >"$temporary"; then
+    rm -f "$temporary"
+    echo "数据库备份失败" >&2
+    exit 1
+  fi
+  mv "$temporary" "$target"
   chmod 600 "$target"
   echo "BACKUP=$target"
 }

@@ -66,13 +66,37 @@ const themeCss = theme
     <meta name="twitter:description" content={description} />
     {
       analyticsEnabled && (
-        <script
-          is:inline
-          defer
-          src={umamiScriptUrl}
-          data-website-id={umamiWebsiteId}
-          data-domains={umamiDomains}
-        />
+        <>
+          <script is:inline>
+            {`
+              window.sanitizeUmamiPayload = (_type, payload) => {
+                if (!payload || !payload.url) return payload;
+                const url = new URL(payload.url, window.location.origin);
+                const allowed = new Set([
+                  "utm_source",
+                  "utm_medium",
+                  "utm_campaign",
+                  "utm_term",
+                  "utm_content",
+                ]);
+                [...url.searchParams.keys()].forEach((key) => {
+                  if (!allowed.has(key)) url.searchParams.delete(key);
+                });
+                payload.url = url.pathname + url.search;
+                return payload;
+              };
+            `}
+          </script>
+          <script
+            is:inline
+            defer
+            src={umamiScriptUrl}
+            data-website-id={umamiWebsiteId}
+            data-domains={umamiDomains}
+            data-before-send="sanitizeUmamiPayload"
+            data-exclude-hash="true"
+          />
+        </>
       )
     }
     {themeCss && <style is:inline set:html={themeCss} />}

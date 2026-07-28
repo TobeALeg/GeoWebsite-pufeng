@@ -95,6 +95,10 @@ if (fs.existsSync(homePath)) {
         failures.push("首页未输出配置的 Umami tracker script");
       if (!homeHtml.includes(`data-website-id="${process.env.PUBLIC_UMAMI_WEBSITE_ID}"`))
         failures.push("首页未输出配置的 Umami website id");
+      if (!homeHtml.includes('data-before-send="sanitizeUmamiPayload"'))
+        failures.push("首页未配置 Umami URL 参数清洗");
+      if (!homeHtml.includes('data-exclude-hash="true"'))
+        failures.push("首页未关闭 URL hash 采集");
     }
   } else if (homeHtml.includes("data-website-id=")) {
     failures.push("未配置 Umami 时不应输出 tracker script");
