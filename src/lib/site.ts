@@ -46,13 +46,13 @@ export type SiteContent = {
     header?: { mode?: "overlay" | "solid"; visual?: "default" | "wanwang" };
     footer: {
       company_name: string;
-      one_line_definition: string;
+      icp_number?: string;
+      icp_url?: string;
       region?: string;
       contact_person?: string;
       phone?: string;
       email?: string;
       badge?: string;
-      bottom_note?: string;
       external_profile_ids: string[];
     };
     theme?: {

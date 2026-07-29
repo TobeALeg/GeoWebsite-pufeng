@@ -12,7 +12,6 @@ const navItems = site.global.navigation.items;
 const year = new Date().getFullYear();
 const telHref = footer.phone ? `tel:${footer.phone.replace(/\s/g, "")}` : undefined;
 const badge = footer.badge;
-const bottomNote = footer.bottom_note ?? footer.one_line_definition;
 ---
 
 <footer class="bg-slate-950 text-white">
@@ -21,7 +20,6 @@ const bottomNote = footer.bottom_note ?? footer.one_line_definition;
       {/* 品牌 */}
       <div class="md:col-span-5">
         <a class="text-xl font-bold tracking-tight text-white" href="/">{footer.company_name}</a>
-        <p class="mt-4 max-w-md text-sm leading-7 text-white/55">{footer.one_line_definition}</p>
         {
           badge && (
             <p class="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs font-medium text-white/70">
@@ -113,9 +111,20 @@ const bottomNote = footer.bottom_note ?? footer.one_line_definition;
       </div>
     </div>
 
-    <div class="mt-14 flex flex-col gap-3 border-t border-white/10 pt-7 text-xs text-white/45 md:flex-row md:items-center md:justify-between">
+    <div class="mt-14 grid gap-3 border-t border-white/10 pt-7 text-center text-xs text-white/45 md:grid-cols-3 md:items-center md:text-left">
       <p>© {year} {footer.company_name} 版权所有</p>
-      <p>{bottomNote}</p>
+      {
+        footer.icp_number && footer.icp_url && (
+          <a
+            class="justify-self-center transition hover:text-white"
+            href={footer.icp_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {footer.icp_number}
+          </a>
+        )
+      }
     </div>
   </div>
 </footer>
